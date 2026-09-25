@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import Header from "@/components/layout/Header";
+import { ToastContainer } from "@/components/ui/Toast";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <QueryClientProvider client={queryClient}>
           <Header />
           <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
+          <ToastContainer />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </body>

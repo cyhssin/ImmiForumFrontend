@@ -25,6 +25,7 @@ export default function DashboardPage() {
     const a = getAuth();
     if (!a) { window.location.href = "/auth/login"; return; }
     setAuth(a);
+    document.title = "Dashboard — Immiforum";
     usersApi.getMyStats().then(setStats).catch(() => {});
   }, []);
 

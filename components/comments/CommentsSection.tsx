@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Comment } from "@/lib/api/comments";
+import { toast } from "@/components/ui/Toast";
 import { CommentNode } from "./CommentNode";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
@@ -126,6 +127,7 @@ export default function CommentsSection({
       if (!res.ok) throw new Error(data?.error?.message ?? "Failed to post");
       setTree((prev) => [...prev, { ...data, replies: [] }]);
       setNewComment("");
+      toast("Comment posted!");
     } catch (err: unknown) {
       setPostError(err instanceof Error ? err.message : "Failed to post comment");
     } finally {

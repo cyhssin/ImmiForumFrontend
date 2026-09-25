@@ -27,6 +27,7 @@ export default function FeedPage() {
   useEffect(() => {
     const auth = getAuth();
     if (!auth) { window.location.href = "/auth/login"; return; }
+    document.title = "Feed — Immiforum";
     usersApi.getFeed()
       .then((res) => setItems((res as { items: FeedItem[] }).items ?? []))
       .catch((err) => setError(err?.message ?? "Failed to load feed"))

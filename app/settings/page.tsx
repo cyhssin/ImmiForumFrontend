@@ -24,6 +24,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const a = getAuth();
     if (!a) { window.location.href = "/auth/login"; return; }
+    document.title = "Settings — Immiforum";
     setAuth(a);
     setForm({
       username: a.user.username ?? "",

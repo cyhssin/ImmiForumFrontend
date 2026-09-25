@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { questionsApi, Question } from "@/lib/api/questions";
+import { QuestionCardSkeleton, CommentSkeleton } from "@/components/ui/Skeleton";
+import { toast } from "@/components/ui/Toast";
 import CommentsSection from "@/components/comments/CommentsSection";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
@@ -84,6 +86,7 @@ export default function QuestionDetailPage() {
       const data = await res.json();
       setLiked(data.liked);
       setLikesCount(data.likes_count);
+      toast(data.liked ? "Added to likes" : "Removed from likes");
     } catch {}
     setReacting(false);
   }
@@ -99,6 +102,7 @@ export default function QuestionDetailPage() {
       const data = await res.json();
       setBookmarked(data.bookmarked);
       setBookmarksCount(data.bookmarks_count);
+      toast(data.bookmarked ? "Bookmarked" : "Bookmark removed");
     } catch {}
     setReacting(false);
   }
@@ -134,8 +138,13 @@ export default function QuestionDetailPage() {
   const isMod = auth?.user?.role === "admin" || auth?.user?.role === "moderator";
 
   if (loading) return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: "60px 0", textAlign: "center", color: "#9ca3af" }}>
-      Loading...
+    <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      <QuestionCardSkeleton />
+      <div style={{ marginTop: 24 }}>
+        <CommentSkeleton />
+        <CommentSkeleton />
+        <CommentSkeleton />
+      </div>
     </div>
   );
 

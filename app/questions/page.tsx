@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth";
+import { QuestionCardSkeleton } from "@/components/ui/Skeleton";
 import { questionsApi, Question, QuestionListResponse } from "@/lib/api/questions";
 
 function timeAgo(dateStr: string): string {
@@ -15,6 +16,7 @@ function timeAgo(dateStr: string): string {
 
 export default function QuestionsPage() {
   const { isAuthenticated } = useAuthStore();
+  useEffect(() => { document.title = "Questions — Immiforum"; }, []);
   const [data, setData] = useState<QuestionListResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -81,12 +83,7 @@ export default function QuestionsPage() {
       {/* Loading */}
       {loading && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {[1,2,3].map(i => (
-            <div key={i} style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 20, animation: "pulse 1.5s infinite" }}>
-              <div style={{ height: 20, background: "#f3f4f6", borderRadius: 4, width: "60%", marginBottom: 8 }} />
-              <div style={{ height: 14, background: "#f3f4f6", borderRadius: 4, width: "40%" }} />
-            </div>
-          ))}
+          {[1,2,3].map(i => <QuestionCardSkeleton key={i} />)}
         </div>
       )}
 

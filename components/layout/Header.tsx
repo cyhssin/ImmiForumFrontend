@@ -16,10 +16,18 @@ export default function Header() {
           Immiforum
         </Link>
 
-        <nav className="hidden sm:flex items-center gap-4 text-sm text-gray-600">
-          <Link href="/questions" className="hover:text-indigo-600 transition-colors">Questions</Link>
+        <nav style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 14, color: "#6b7280" }}>
+          <a href="/questions" style={{ textDecoration: "none", color: "inherit" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "#4f46e5")}
+            onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}>
+            Questions
+          </a>
           {isAuthenticated && (
-            <Link href="/feed" className="hover:text-indigo-600 transition-colors">Feed</Link>
+            <a href="/feed" style={{ textDecoration: "none", color: "inherit" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#4f46e5")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}>
+              Feed
+            </a>
           )}
         </nav>
 
