@@ -116,6 +116,21 @@ export default function QuestionDetailPage() {
   }
 
   const isAuthor = auth?.user?.id === question?.author.id;
+
+  async function handleModAction(action: "pin" | "unpin" | "close" | "reopen") {
+    if (!question) return;
+    try {
+      const res = await fetch(`${API_URL}/admin/questions/${question.id}/${action}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${auth?.accessToken}` },
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message ?? "Action failed");
+      setQuestion((q) => q ? { ...q, status: data.status, is_pinned: data.is_pinned } : q);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Action failed");
+    }
+  }
   const isMod = auth?.user?.role === "admin" || auth?.user?.role === "moderator";
 
   if (loading) return (
@@ -215,6 +230,24 @@ export default function QuestionDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Moderator action bar */}
+      {isMod && question && (
+        <div style={{ background: "#fefce8", border: "1px solid #fde68a", borderRadius: 12, padding: "14px 20px", marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#92400e", marginRight: 4 }}>🛡 Mod Actions:</span>
+          <button onClick={() => handleModAction(question.is_pinned ? "unpin" : "pin")}
+            style={{ background: "white", border: "1px solid #fde68a", borderRadius: 6, padding: "5px 12px", fontSize: 13, cursor: "pointer", color: "#92400e" }}>
+            {question.is_pinned ? "📌 Unpin" : "📌 Pin"}
+          </button>
+          <button onClick={() => handleModAction(question.status === "open" ? "close" : "reopen")}
+            style={{ background: "white", border: "1px solid #fde68a", borderRadius: 6, padding: "5px 12px", fontSize: 13, cursor: "pointer", color: "#92400e" }}>
+            {question.status === "open" ? "🔒 Close" : "🔓 Reopen"}
+          </button>
+          <Link href="/admin/moderation-logs" style={{ fontSize: 13, color: "#4f46e5", marginLeft: "auto" }}>
+            View logs →
+          </Link>
+        </div>
+      )}
 
       {/* Comments */}
       <CommentsSection
