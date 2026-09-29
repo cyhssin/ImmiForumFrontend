@@ -40,9 +40,12 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setMenuOpen((o) => !o)}
-                  className="h-8 w-8 rounded-full bg-indigo-600 text-white text-xs font-semibold flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  style={{ width: 32, height: 32, borderRadius: "50%", overflow: "hidden", border: "none", cursor: "pointer", padding: 0, background: "#4f46e5" }}
                 >
-                  {user.username.slice(0, 2).toUpperCase()}
+                  {user.avatar_url
+                    ? <img src={user.avatar_url} alt={user.username} style={{ width: 32, height: 32, objectFit: "cover", display: "block" }} onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                    : <span style={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 11, fontWeight: 700 }}>{user.username.slice(0, 2).toUpperCase()}</span>
+                  }
                 </button>
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1 text-sm z-50">

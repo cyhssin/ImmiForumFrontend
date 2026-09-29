@@ -76,9 +76,9 @@ export default function ProfilePage() {
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 28, marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* Avatar */}
-          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 700, flexShrink: 0 }}>
+          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 700, flexShrink: 0, overflow: "hidden", flexShrink: 0 }}>
             {profile.avatar_url
-              ? <img src={profile.avatar_url} alt={profile.username} style={{ width: 72, height: 72, borderRadius: "50%", objectFit: "cover" }} />
+              ? <img src={profile.avatar_url} alt={profile.username} style={{ width: 72, height: 72, borderRadius: "50%", objectFit: "cover", display: "block" }} onError={(e) => { e.currentTarget.style.display = "none"; }} />
               : profile.username.slice(0, 2).toUpperCase()
             }
           </div>

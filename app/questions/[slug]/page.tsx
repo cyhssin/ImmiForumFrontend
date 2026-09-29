@@ -193,9 +193,9 @@ export default function QuestionDetailPage() {
         {question.tags.length > 0 && (
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
             {question.tags.map((t) => (
-              <span key={t.id} style={{ background: "#eef2ff", color: "#4338ca", fontSize: 13, padding: "3px 10px", borderRadius: 99 }}>
+              <Link key={t.id} href={`/questions?tag=${encodeURIComponent(t.name)}`} style={{ background: "#eef2ff", color: "#4338ca", fontSize: 13, padding: "3px 10px", borderRadius: 99, textDecoration: "none" }}>
                 {t.name}
-              </span>
+              </Link>
             ))}
           </div>
         )}

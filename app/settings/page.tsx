@@ -39,19 +39,25 @@ export default function SettingsPage() {
     setProfileMsg("");
     setProfileError("");
     try {
-      const updated = await usersApi.updateMe({
-        username: form.username,
-        bio: form.bio,
-        avatar_url: form.avatar_url,
-      }) as { username: string; bio?: string; avatar_url?: string };
+      const stored = localStorage.getItem("auth-store");
+      const token = stored ? JSON.parse(stored)?.state?.accessToken : null;
+      if (!token) { setProfileError("Session expired. Please log in again."); setSaving(false); return; }
+
+      const res = await fetch("http://localhost:8000/api/v1/users/me", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ username: form.username, bio: form.bio, avatar_url: form.avatar_url }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setProfileError(data?.error?.message ?? "Failed to update"); return; }
 
       // Update localStorage
       const raw = localStorage.getItem("auth-store");
       if (raw) {
         const parsed = JSON.parse(raw);
-        parsed.state.user.username = updated.username;
-        parsed.state.user.bio = updated.bio;
-        parsed.state.user.avatar_url = updated.avatar_url;
+        parsed.state.user.username = data.username;
+        parsed.state.user.bio = data.bio;
+        parsed.state.user.avatar_url = data.avatar_url;
         localStorage.setItem("auth-store", JSON.stringify(parsed));
       }
       setProfileMsg("Profile updated successfully!");

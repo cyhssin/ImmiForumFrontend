@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import { QuestionCardSkeleton } from "@/components/ui/Skeleton";
 import { questionsApi, Question, QuestionListResponse } from "@/lib/api/questions";
@@ -16,27 +17,34 @@ function timeAgo(dateStr: string): string {
 
 export default function QuestionsPage() {
   const { isAuthenticated } = useAuthStore();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") ?? "";
+  const tag = searchParams.get("tag") ?? "";
   useEffect(() => { document.title = "Questions — Immiforum"; }, []);
   const [data, setData] = useState<QuestionListResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
-    questionsApi.list({ page, size: 10, search: search || undefined })
+    questionsApi.list({ page, size: 10, search: search || undefined, tag: tag || undefined })
       .then(setData)
       .catch((err) => setError(err?.message ?? "Failed to load questions"))
       .finally(() => setLoading(false));
-  }, [page, search]);
+  }, [page, search, tag]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const query = formData.get("search")?.toString().trim() ?? "";
+    const params = new URLSearchParams();
+    if (query) params.set("search", query);
+    if (tag) params.set("tag", tag);
     setPage(1);
-    setSearch(searchInput);
+    router.push(params.size ? `/questions?${params.toString()}` : "/questions");
   }
 
   const totalPages = data ? Math.ceil(data.total / data.size) : 1;
@@ -57,8 +65,9 @@ export default function QuestionsPage() {
       <form onSubmit={handleSearch} style={{ display: "flex", gap: 8, marginBottom: 24 }}>
         <input
           type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          key={search}
+          name="search"
+          defaultValue={search}
           placeholder="Search questions..."
           style={{ flex: 1, border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, outline: "none" }}
         />
@@ -66,17 +75,26 @@ export default function QuestionsPage() {
           Search
         </button>
         {search && (
-          <button type="button" onClick={() => { setSearch(""); setSearchInput(""); setPage(1); }}
+          <button type="button" onClick={() => { setPage(1); router.push(tag ? `/questions?tag=${encodeURIComponent(tag)}` : "/questions"); }}
             style={{ background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, cursor: "pointer" }}>
             Clear
           </button>
         )}
       </form>
 
+      {tag && (
+        <p style={{ fontSize: 13, color: "#6b7280", margin: "-12px 0 16px" }}>
+          Tagged <strong>#{tag}</strong>{" "}
+          <Link href={search ? `/questions?search=${encodeURIComponent(search)}` : "/questions"} onClick={() => setPage(1)} style={{ color: "#4f46e5" }}>
+            Clear tag
+          </Link>
+        </p>
+      )}
+
       {/* Results count */}
       {data && (
         <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 16 }}>
-          {data.total} question{data.total !== 1 ? "s" : ""}{search ? ` for "${search}"` : ""}
+          {data.total} question{data.total !== 1 ? "s" : ""}{search ? ` for "${search}"` : ""}{tag ? ` tagged "${tag}"` : ""}
         </p>
       )}
 
@@ -100,7 +118,7 @@ export default function QuestionsPage() {
           <div style={{ fontSize: 48, marginBottom: 12 }}>💬</div>
           <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>No questions yet</h3>
           <p style={{ fontSize: 14, margin: "0 0 20px" }}>
-            {search ? `No results for "${search}"` : "Be the first to ask a question!"}
+            {search ? `No results for "${search}"` : tag ? `No questions tagged "${tag}"` : "Be the first to ask a question!"}
           </p>
           {isAuthenticated && (
             <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
@@ -114,7 +132,7 @@ export default function QuestionsPage() {
       {!loading && !error && data && data.items.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {data.items.map((q: Question) => (
-            <QuestionCard key={q.id} question={q} />
+            <QuestionCard key={q.id} question={q} onTagClick={() => setPage(1)} />
           ))}
         </div>
       )}
@@ -145,10 +163,9 @@ export default function QuestionsPage() {
   );
 }
 
-function QuestionCard({ question: q }: { question: Question }) {
+function QuestionCard({ question: q, onTagClick }: { question: Question; onTagClick: () => void }) {
   return (
-    <Link href={`/questions/${q.slug}`} style={{ textDecoration: "none" }}>
-      <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 20, transition: "box-shadow 0.15s", cursor: "pointer" }}
+      <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 20, transition: "box-shadow 0.15s" }}
         onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)")}
         onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
       >
@@ -164,7 +181,9 @@ function QuestionCard({ question: q }: { question: Question }) {
               Closed
             </span>
           )}
-          <h2 style={{ fontSize: 16, fontWeight: 600, color: "#111827", margin: 0, lineHeight: 1.4 }}>{q.title}</h2>
+          <h2 style={{ fontSize: 16, fontWeight: 600, margin: 0, lineHeight: 1.4 }}>
+            <Link href={`/questions/${q.slug}`} style={{ color: "#111827", textDecoration: "none" }}>{q.title}</Link>
+          </h2>
         </div>
 
         {/* Body preview */}
@@ -176,9 +195,9 @@ function QuestionCard({ question: q }: { question: Question }) {
         {q.tags.length > 0 && (
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
             {q.tags.map((t) => (
-              <span key={t.id} style={{ background: "#eef2ff", color: "#4338ca", fontSize: 12, padding: "2px 8px", borderRadius: 99 }}>
+              <Link key={t.id} href={`/questions?tag=${encodeURIComponent(t.name)}`} onClick={onTagClick} style={{ background: "#eef2ff", color: "#4338ca", fontSize: 12, padding: "2px 8px", borderRadius: 99, textDecoration: "none" }}>
                 {t.name}
-              </span>
+              </Link>
             ))}
           </div>
         )}
@@ -192,6 +211,5 @@ function QuestionCard({ question: q }: { question: Question }) {
           <span>🔖 {q.bookmarks_count}</span>
         </div>
       </div>
-    </Link>
   );
 }

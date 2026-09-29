@@ -1,8 +1,29 @@
+// app/page.tsx
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuthStore } from "@/store/auth";
 
 export default function HomePage() {
+  const { isAuthenticated } = useAuthStore();
+  const [searchInput, setSearchInput] = useState("");
+  const router = useRouter();
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const query = searchInput.trim();
+    if (!query) {
+      router.push("/questions");
+      return;
+    }
+    router.push(`/questions?search=${encodeURIComponent(query)}`);
+  }
+
   return (
     <div className="flex flex-col items-center gap-10 py-12">
+      {/* Hero Header */}
       <div className="text-center max-w-2xl">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           Welcome to <span className="text-indigo-600">Immiforum</span>
@@ -12,23 +33,44 @@ export default function HomePage() {
           and help each other navigate visas, documents, and life abroad.
         </p>
         <div className="mt-6 flex gap-3 justify-center">
-          <a href="/questions" className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700">
+          <Link
+            href="/questions"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700"
+          >
             Browse Questions
-          </a>
-          <a href="/auth/register" className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50">
-            Join the Community
-          </a>
+          </Link>
+          {!isAuthenticated && (
+            <Link
+              href="/auth/register"
+              className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50"
+            >
+              Join the Community
+            </Link>
+          )}
         </div>
       </div>
 
-      <div className="w-full max-w-xl">
+      {/* Search Bar styled identical to /questions */}
+      <form
+        onSubmit={handleSearch}
+        className="w-full max-w-xl flex gap-2"
+      >
         <input
           type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search questions..."
-          className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-      </div>
+        <button
+          type="submit"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-3 text-sm font-semibold transition-colors cursor-pointer"
+        >
+          Search
+        </button>
+      </form>
 
+      {/* Feature Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl text-center">
         {[
           { icon: "❓", title: "Ask Questions", desc: "Get answers from people who have been there." },
