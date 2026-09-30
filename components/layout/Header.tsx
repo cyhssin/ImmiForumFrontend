@@ -20,13 +20,13 @@ export default function Header() {
           <a href="/questions" style={{ textDecoration: "none", color: "inherit" }}
             onMouseEnter={e => (e.currentTarget.style.color = "#4f46e5")}
             onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}>
-            Questions
+            پرسش‌ها
           </a>
           {isAuthenticated && (
             <a href="/feed" style={{ textDecoration: "none", color: "inherit" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#4f46e5")}
               onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}>
-              Feed
+              خبرها
             </a>
           )}
         </nav>
@@ -35,7 +35,7 @@ export default function Header() {
           {isAuthenticated && user ? (
             <>
               <Link href="/questions/ask">
-                <Button size="sm">Ask Question</Button>
+                <Button size="sm">بپرسید</Button>
               </Link>
               <div className="relative">
                 <button
@@ -48,19 +48,19 @@ export default function Header() {
                   }
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1 text-sm z-50">
-                    <Link href={`/u/${user.username}`} className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Profile</Link>
-                    <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Dashboard</Link>
-                    <Link href="/settings" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Settings</Link>
+                  <div className="dropdown-menu absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1 text-sm z-50">
+                    <Link href={`/u/${user.username}`} className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>پروفایل</Link>
+                    <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>داشبورد</Link>
+                    <Link href="/settings" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>تنظیمات</Link>
                     {(user.role === "admin" || user.role === "moderator") && (
-                      <Link href="/admin" className="block px-4 py-2 hover:bg-gray-50 text-indigo-600" onClick={() => setMenuOpen(false)}>Admin Console</Link>
+                      <Link href="/admin" className="block px-4 py-2 hover:bg-gray-50 text-indigo-600" onClick={() => setMenuOpen(false)}>ادمین پنل</Link>
                     )}
                     <hr className="my-1" />
                     <button
                       onClick={() => { logout(); setMenuOpen(false); }}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600"
+                      className="w-full text-start px-4 py-2 hover:bg-gray-50 text-red-600"
                     >
-                      Logout
+                      خروج
                     </button>
                   </div>
                 )}
@@ -68,8 +68,8 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link href="/auth/login"><Button variant="ghost" size="sm">Login</Button></Link>
-              <Link href="/auth/register"><Button size="sm">Register</Button></Link>
+              <Link href="/auth/login"><Button variant="ghost" size="sm">ورود</Button></Link>
+              <Link href="/auth/register"><Button size="sm">ثبت نام</Button></Link>
             </>
           )}
         </div>

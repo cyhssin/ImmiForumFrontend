@@ -7,10 +7,10 @@ import { usersApi, PublicProfile } from "@/lib/api/users";
 
 function timeAgo(dateStr: string): string {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-  if (diff < 86400) return "today";
-  if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
-  if (diff < 31536000) return `${Math.floor(diff / 2592000)}mo ago`;
-  return `${Math.floor(diff / 31536000)}y ago`;
+  if (diff < 86400) return "امروز";
+  if (diff < 2592000) return `${Math.floor(diff / 86400)} روز پیش`;
+  if (diff < 31536000) return `${Math.floor(diff / 2592000)} ماه پیش`;
+  return `${Math.floor(diff / 31536000)} سال پیش`;
 }
 
 function getAuth() {
@@ -63,17 +63,17 @@ export default function ProfilePage() {
 
   const isOwnProfile = auth?.user?.username === username;
 
-  if (loading) return <div style={{ textAlign: "center", padding: "80px 0", color: "#9ca3af" }}>Loading...</div>;
+  if (loading) return <div style={{ textAlign: "center", padding: "80px 0", color: "#9ca3af" }}>در حال بارگذاری...</div>;
   if (error || !profile) return (
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
-      <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8, padding: 16, color: "#dc2626" }}>{error || "User not found"}</div>
+      <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8, padding: 16, color: "#dc2626" }}>{error || "کاربر پیدا نشد"}</div>
     </div>
   );
 
   return (
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
       {/* Profile card */}
-      <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 28, marginBottom: 24 }}>
+      <div style={{ background: "var(--surface-raised)", borderRadius: 16, border: "1px solid var(--border)", padding: 28, marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* Avatar */}
           <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 700, flexShrink: 0, overflow: "hidden" }}>
@@ -87,19 +87,19 @@ export default function ProfilePage() {
           <div style={{ flex: 1 }}>
             <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: "0 0 4px" }}>{profile.username}</h1>
             {profile.bio && <p style={{ fontSize: 14, color: "#6b7280", margin: "0 0 8px" }}>{profile.bio}</p>}
-            <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>Joined {timeAgo(profile.created_at)}</p>
+            <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>عضویت: {timeAgo(profile.created_at)}</p>
           </div>
 
           {/* Follow / Edit button */}
           {!isOwnProfile && auth && (
             <button onClick={handleFollow} disabled={followLoading}
               style={{ background: isFollowing ? "#f3f4f6" : "#4f46e5", color: isFollowing ? "#374151" : "white", border: isFollowing ? "1px solid #d1d5db" : "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-              {followLoading ? "..." : isFollowing ? "Unfollow" : "Follow"}
+              {followLoading ? "..." : isFollowing ? "لغو دنبال‌کردن" : "دنبال‌کردن"}
             </button>
           )}
           {isOwnProfile && (
             <Link href="/settings" style={{ background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-              Edit Profile
+              ویرایش پروفایل
             </Link>
           )}
         </div>
@@ -107,8 +107,8 @@ export default function ProfilePage() {
         {/* Stats row */}
         <div style={{ display: "flex", gap: 24, marginTop: 20, paddingTop: 20, borderTop: "1px solid #f3f4f6" }}>
           {[
-            { label: "Questions", value: profile.questions_count },
-            { label: "Comments", value: profile.comments_count },
+            { label: "پرسش‌ها", value: profile.questions_count },
+            { label: "دیدگاه‌ها", value: profile.comments_count },
           ].map((s) => (
             <div key={s.label} style={{ textAlign: "center" }}>
               <div style={{ fontSize: 20, fontWeight: 700, color: "#111827" }}>{s.value}</div>
@@ -123,7 +123,7 @@ export default function ProfilePage() {
         {(["questions", "comments"] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             style={{ padding: "8px 20px", borderRadius: 8, border: "none", fontSize: 14, fontWeight: 600, cursor: "pointer", background: tab === t ? "#4f46e5" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
-            {t.charAt(0).toUpperCase() + t.slice(1)}
+            {{ questions: "پرسش‌ها", comments: "دیدگاه‌ها" }[t]}
           </button>
         ))}
       </div>
@@ -131,13 +131,13 @@ export default function ProfilePage() {
       {/* Questions tab */}
       {tab === "questions" && (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {questions.length === 0 && <p style={{ color: "#9ca3af", textAlign: "center", padding: "32px 0" }}>No questions yet.</p>}
+          {questions.length === 0 && <p style={{ color: "#9ca3af", textAlign: "center", padding: "32px 0" }}>هنوز پرسشی ثبت نشده است.</p>}
           {(questions as Array<{ slug: string; title: string; status: string; is_pinned: boolean; likes_count: number; comments_count: number; created_at: string }>).map((q) => (
             <Link key={q.slug} href={`/questions/${q.slug}`} style={{ textDecoration: "none" }}>
-              <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
+              <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
                 <div style={{ display: "flex", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
-                  {q.is_pinned && <span style={{ background: "#fef9c3", color: "#854d0e", fontSize: 11, padding: "2px 8px", borderRadius: 99, fontWeight: 600 }}>📌 Pinned</span>}
-                  <span style={{ background: q.status === "open" ? "#dcfce7" : "#fee2e2", color: q.status === "open" ? "#166534" : "#991b1b", fontSize: 11, padding: "2px 8px", borderRadius: 99, fontWeight: 600 }}>{q.status}</span>
+                  {q.is_pinned && <span style={{ background: "#fef9c3", color: "#854d0e", fontSize: 11, padding: "2px 8px", borderRadius: 99, fontWeight: 600 }}>📌 سنجاق‌شده</span>}
+                  <span style={{ background: q.status === "open" ? "#dcfce7" : "#fee2e2", color: q.status === "open" ? "#166534" : "#991b1b", fontSize: 11, padding: "2px 8px", borderRadius: 99, fontWeight: 600 }}>{q.status === "open" ? "باز" : "بسته"}</span>
                 </div>
                 <p style={{ fontSize: 15, fontWeight: 600, color: "#111827", margin: "0 0 6px" }}>{q.title}</p>
                 <div style={{ fontSize: 12, color: "#9ca3af", display: "flex", gap: 12 }}>
@@ -154,11 +154,11 @@ export default function ProfilePage() {
       {/* Comments tab */}
       {tab === "comments" && (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {comments.length === 0 && <p style={{ color: "#9ca3af", textAlign: "center", padding: "32px 0" }}>No comments yet.</p>}
+          {comments.length === 0 && <p style={{ color: "#9ca3af", textAlign: "center", padding: "32px 0" }}>هنوز دیدگاهی ثبت نشده است.</p>}
           {(comments as Array<{ id: string; body: string; question_slug: string; question_title: string; created_at: string }>).map((c) => (
             <Link key={c.id} href={`/questions/${c.question_slug}`} style={{ textDecoration: "none" }}>
-              <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
-                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 6px" }}>on <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
+              <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
+                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 6px" }}>در <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
                 <p style={{ fontSize: 14, color: "#374151", margin: "0 0 6px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{c.body}</p>
                 <span style={{ fontSize: 12, color: "#9ca3af" }}>{timeAgo(c.created_at)}</span>
               </div>

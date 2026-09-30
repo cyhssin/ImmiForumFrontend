@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { usersApi } from "@/lib/api/users";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
+
 function getAuth() {
   try {
     const raw = localStorage.getItem("auth-store");
@@ -43,7 +45,7 @@ export default function SettingsPage() {
       const token = stored ? JSON.parse(stored)?.state?.accessToken : null;
       if (!token) { setProfileError("Session expired. Please log in again."); setSaving(false); return; }
 
-      const res = await fetch("http://localhost:8000/api/v1/users/me", {
+      const res = await fetch(`${API_URL}/users/me`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: JSON.stringify({ username: form.username, bio: form.bio, avatar_url: form.avatar_url }),

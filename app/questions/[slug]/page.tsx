@@ -8,7 +8,7 @@ import { QuestionCardSkeleton, CommentSkeleton } from "@/components/ui/Skeleton"
 import { toast } from "@/components/ui/Toast";
 import CommentsSection from "@/components/comments/CommentsSection";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
 
 function timeAgo(dateStr: string): string {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -228,7 +228,7 @@ export default function QuestionDetailPage() {
           </button>
           <span style={{ fontSize: 13, color: "#9ca3af" }}>💬 {question.comments_count}</span>
 
-          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+          <div style={{ marginInlineStart: "auto", display: "flex", gap: 8 }}>
             {isAuthor && (
               <Link href={`/questions/${question.slug}/edit`}
                 style={{ fontSize: 13, color: "#4f46e5", textDecoration: "none", padding: "6px 12px", border: "1px solid #a5b4fc", borderRadius: 8 }}>
@@ -248,7 +248,7 @@ export default function QuestionDetailPage() {
       {/* Moderator action bar */}
       {isMod && question && (
         <div style={{ background: "#fefce8", border: "1px solid #fde68a", borderRadius: 12, padding: "14px 20px", marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#92400e", marginRight: 4 }}>🛡 Mod Actions:</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#92400e", marginInlineEnd: 4 }}>🛡 Mod Actions:</span>
           <button onClick={() => handleModAction(question.is_pinned ? "unpin" : "pin")}
             style={{ background: "white", border: "1px solid #fde68a", borderRadius: 6, padding: "5px 12px", fontSize: 13, cursor: "pointer", color: "#92400e" }}>
             {question.is_pinned ? "📌 Unpin" : "📌 Pin"}
@@ -257,7 +257,7 @@ export default function QuestionDetailPage() {
             style={{ background: "white", border: "1px solid #fde68a", borderRadius: 6, padding: "5px 12px", fontSize: 13, cursor: "pointer", color: "#92400e" }}>
             {question.status === "open" ? "🔒 Close" : "🔓 Reopen"}
           </button>
-          <Link href="/admin/moderation-logs" style={{ fontSize: 13, color: "#4f46e5", marginLeft: "auto" }}>
+          <Link href="/admin/moderation-logs" style={{ fontSize: 13, color: "#4f46e5", marginInlineStart: "auto" }}>
             View logs →
           </Link>
         </div>

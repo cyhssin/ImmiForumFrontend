@@ -31,7 +31,7 @@ export function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div style={{ position: "fixed", bottom: 24, right: 24, display: "flex", flexDirection: "column", gap: 8, zIndex: 9999 }}>
+    <div style={{ position: "fixed", bottom: 24, insetInlineStart: 24, display: "flex", flexDirection: "column", gap: 8, zIndex: 9999 }}>
       {toasts.map((t) => (
         <div key={t.id} style={{
           background: t.type === "success" ? "#166534" : t.type === "error" ? "#991b1b" : "#1e40af",

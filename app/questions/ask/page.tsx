@@ -78,7 +78,7 @@ export default function AskPage() {
       </Link>
 
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 32 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: "0 0 24px" }}>Ask a Question</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: "0 0 24px" }}>پرسشتان را مطرح کنید</h1>
 
         {error && (
           <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8, padding: 12, color: "#dc2626", fontSize: 14, marginBottom: 20 }}>
@@ -89,12 +89,12 @@ export default function AskPage() {
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {/* Title */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Title <span style={{ color: "#dc2626" }}>*</span></label>
+            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>عنوان <span style={{ color: "#dc2626" }}>*</span></label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="What is your question? Be specific."
+              placeholder="عنوان پرسش خود را وارد کنید"
               required
               maxLength={200}
               style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "10px 12px", fontSize: 14, outline: "none" }}
@@ -104,11 +104,11 @@ export default function AskPage() {
 
           {/* Body */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Details <span style={{ color: "#dc2626" }}>*</span></label>
+            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>توضیحات <span style={{ color: "#dc2626" }}>*</span></label>
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Describe your situation in detail. Include what you have tried and what you need help with."
+              placeholder="توضیحات پرسش خود را وارد کنید"
               required
               rows={8}
               style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "10px 12px", fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit" }}
@@ -118,7 +118,7 @@ export default function AskPage() {
           {/* Category */}
           {categories.length > 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Category</label>
+              <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>دسته بندی</label>
               <select
                 value={categoryId ?? ""}
                 onChange={(e) => setCategoryId(e.target.value ? Number(e.target.value) : null)}
@@ -134,7 +134,7 @@ export default function AskPage() {
 
           {/* Tags */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Tags <span style={{ fontSize: 12, fontWeight: 400, color: "#9ca3af" }}>(up to 5)</span></label>
+            <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>تگ ها <span style={{ fontSize: 12, fontWeight: 400, color: "#9ca3af" }}>(up to 5)</span></label>
             <div style={{ display: "flex", gap: 8 }}>
               <input
                 type="text"

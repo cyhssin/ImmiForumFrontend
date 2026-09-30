@@ -71,7 +71,7 @@ export default function FeedPage() {
                     {" "}{item.activity_type === "question_created" ? "asked a question" : "commented"}
                   </span>
                 </div>
-                <span style={{ marginLeft: "auto", fontSize: 12, color: "#9ca3af" }}>{timeAgo(item.created_at)}</span>
+                <span style={{ marginInlineStart: "auto", fontSize: 12, color: "#9ca3af" }}>{timeAgo(item.created_at)}</span>
               </div>
 
               <Link href={`/questions/${item.question_slug}`} style={{ textDecoration: "none" }}>

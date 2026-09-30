@@ -5,7 +5,7 @@ import { Comment } from "@/lib/api/comments";
 import { toast } from "@/components/ui/Toast";
 import { CommentNode } from "./CommentNode";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
 
 function getToken(): string | null {
   try {

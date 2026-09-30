@@ -95,7 +95,7 @@ function LogsTable() {
                     </td>
                     <td style={{ padding: "12px 16px", fontSize: 13, color: "#6b7280" }}>
                       <span style={{ background: "#f3f4f6", padding: "2px 6px", borderRadius: 4, fontSize: 12 }}>{log.target_type}</span>
-                      <span style={{ marginLeft: 6, fontFamily: "monospace", fontSize: 11, color: "#9ca3af" }}>{log.target_id ? log.target_id.slice(0, 8) + '...' : '—'}</span>
+                      <span style={{ marginInlineStart: 6, fontFamily: "monospace", fontSize: 11, color: "#9ca3af" }}>{log.target_id ? log.target_id.slice(0, 8) + '...' : '—'}</span>
                     </td>
                     <td style={{ padding: "12px 16px", fontSize: 13, color: "#374151", fontWeight: 600 }}>
                       {log.moderator_username ?? (log.moderator_id ? log.moderator_id.slice(0, 8) : '—')}

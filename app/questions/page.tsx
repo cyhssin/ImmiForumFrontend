@@ -61,10 +61,10 @@ function QuestionsContent() {
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
       {/* Header row */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, gap: 16, flexWrap: "wrap" }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: 0 }}>Questions</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: 0 }}>پرسش‌ها</h1>
         {isAuthenticated && (
           <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "8px 18px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-            Ask Question
+            بپرسید
           </Link>
         )}
       </div>
@@ -76,16 +76,16 @@ function QuestionsContent() {
           key={search}
           name="search"
           defaultValue={search}
-          placeholder="Search questions..."
+          placeholder="جست و جو در پرسش‌ها"
           style={{ flex: 1, border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, outline: "none" }}
         />
         <button type="submit" style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-          Search
+          جست و جو
         </button>
         {search && (
           <button type="button" onClick={() => { setPage(1); router.push(tag ? `/questions?tag=${encodeURIComponent(tag)}` : "/questions"); }}
             style={{ background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, cursor: "pointer" }}>
-            Clear
+            پاک کردن جست و جو
           </button>
         )}
       </form>
@@ -124,9 +124,9 @@ function QuestionsContent() {
       {!loading && !error && data?.items.length === 0 && (
         <div style={{ textAlign: "center", padding: "64px 0", color: "#6b7280" }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>💬</div>
-          <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>No questions yet</h3>
+          <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>هنوز پرسشی مطرح نشده</h3>
           <p style={{ fontSize: 14, margin: "0 0 20px" }}>
-            {search ? `No results for "${search}"` : tag ? `No questions tagged "${tag}"` : "Be the first to ask a question!"}
+            {search ? `No results for "${search}"` : tag ? `No questions tagged "${tag}"` : "اولین سؤال را شما بپرسید و گفتگو را شروع کنید"}
           </p>
           {isAuthenticated && (
             <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>

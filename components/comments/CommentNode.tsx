@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Comment } from "@/lib/api/comments";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
 
 function getToken(): string | null {
   try {
@@ -129,13 +129,13 @@ export function CommentNode({
   const indentLeft = Math.min(depth * 20, 80);
 
   return (
-    <div style={{ marginLeft: indentLeft, marginTop: 12 }}>
+    <div style={{ marginInlineStart: indentLeft, marginTop: 12 }}>
       <div style={{
         background: depth === 0 ? "white" : "#f9fafb",
         border: "1px solid #e5e7eb",
         borderRadius: 10,
         padding: "14px 16px",
-        borderLeft: depth > 0 ? "3px solid #a5b4fc" : "1px solid #e5e7eb",
+        borderInlineStart: depth > 0 ? "3px solid #a5b4fc" : "1px solid #e5e7eb",
       }}>
         {/* Author row */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
@@ -206,7 +206,7 @@ export function CommentNode({
 
       {/* Reply form */}
       {showReplyForm && (
-        <form onSubmit={submitReply} style={{ marginTop: 8, marginLeft: 20, display: "flex", flexDirection: "column", gap: 8 }}>
+        <form onSubmit={submitReply} style={{ marginTop: 8, marginInlineStart: 20, display: "flex", flexDirection: "column", gap: 8 }}>
           <textarea
             value={replyBody}
             onChange={(e) => setReplyBody(e.target.value)}

@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { questionsApi, Question, Category } from "@/lib/api/questions";
 
-const API_URL = "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
 
 export default function EditQuestionPage() {
   const { slug } = useParams<{ slug: string }>();

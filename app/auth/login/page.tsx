@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const API_URL = "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -11,7 +11,7 @@ export default function LoginPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("Logging in...");
+    setStatus("در حال ورود...");
 
     try {
       const form = new URLSearchParams();
@@ -30,7 +30,7 @@ export default function LoginPage() {
       const loginData = await loginRes.json();
 
       if (!loginRes.ok) {
-        setStatus("Error: " + (loginData.error?.message ?? JSON.stringify(loginData)));
+        setStatus("خطا: " + (loginData.error?.message ?? JSON.stringify(loginData)));
         return;
       }
 
@@ -57,24 +57,24 @@ export default function LoginPage() {
         version: 0,
       }));
 
-      setStatus("SUCCESS! Redirecting...");
+      setStatus("ورود موفق بود! در حال انتقال...");
       setTimeout(() => { window.location.href = "/questions"; }, 800);
 
     } catch (err) {
-      setStatus("ERROR: " + String(err));
+      setStatus("خطا: " + String(err));
     }
   }
 
   return (
     <div style={{ maxWidth: 360, margin: "80px auto", padding: 32, background: "white", borderRadius: 16, border: "1px solid #e5e7eb" }}>
-      <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Sign in</h1>
+      <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>ورود به حساب کاربری</h1>
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username or email"
+          placeholder="نام کاربری یا ایمیل"
           required
           style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14 }}
         />
@@ -82,7 +82,7 @@ export default function LoginPage() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="گذرواژه"
           required
           style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14 }}
         />
@@ -90,7 +90,7 @@ export default function LoginPage() {
           type="submit"
           style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "10px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
         >
-          Sign in
+          ورود
         </button>
       </form>
 
@@ -101,7 +101,7 @@ export default function LoginPage() {
       )}
 
       <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#6b7280" }}>
-        No account? <a href="/auth/register" style={{ color: "#4f46e5", fontWeight: 500 }}>Register</a>
+        حساب کاربری ندارید؟ <a href="/auth/register" style={{ color: "#4f46e5", fontWeight: 500 }}>ثبت‌نام کنید</a>
       </p>
     </div>
   );

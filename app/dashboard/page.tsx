@@ -25,7 +25,7 @@ export default function DashboardPage() {
     const a = getAuth();
     if (!a) { window.location.href = "/auth/login"; return; }
     setAuth(a);
-    document.title = "Dashboard — Immiforum";
+    document.title = "داشبورد";
     usersApi.getMyStats().then(setStats).catch(() => {});
   }, []);
 
@@ -52,25 +52,25 @@ export default function DashboardPage() {
   if (!auth) return null;
 
   const statCards = stats ? [
-    { label: "Questions", value: stats.questions_count, icon: "❓" },
-    { label: "Comments", value: stats.comments_count, icon: "💬" },
-    { label: "Likes Given", value: stats.likes_given_count, icon: "♥" },
-    { label: "Likes Received", value: stats.likes_received_count, icon: "⭐" },
-    { label: "Bookmarks", value: stats.bookmarks_count, icon: "🔖" },
+    { label: "پرسش‌ها", value: stats.questions_count, icon: "❓" },
+    { label: "دیدگاه‌ها", value: stats.comments_count, icon: "💬" },
+    { label: "پسندیده‌شده توسط شما", value: stats.likes_given_count, icon: "♥" },
+    { label: "پسندیده‌شده توسط دیگران", value: stats.likes_received_count, icon: "⭐" },
+    { label: "نشانک‌ها", value: stats.bookmarks_count, icon: "🔖" },
   ] : [];
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 700, color: "#111827", margin: "0 0 4px" }}>Dashboard</h1>
-        <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>Welcome back, <strong>{auth.user.username}</strong></p>
+        <h1 style={{ fontSize: 24, fontWeight: 700, color: "#111827", margin: "0 0 4px" }}>داشبورد</h1>
+        <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>خوش آمدید، <strong>{auth.user.username}</strong></p>
       </div>
 
       {/* Stat tiles */}
       {stats && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 12, marginBottom: 28 }}>
           {statCards.map((s) => (
-            <div key={s.label} style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: "16px 12px", textAlign: "center" }}>
+            <div key={s.label} style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: "16px 12px", textAlign: "center" }}>
               <div style={{ fontSize: 24, marginBottom: 6 }}>{s.icon}</div>
               <div style={{ fontSize: 22, fontWeight: 700, color: "#111827" }}>{s.value}</div>
               <div style={{ fontSize: 12, color: "#9ca3af" }}>{s.label}</div>
@@ -84,21 +84,21 @@ export default function DashboardPage() {
         {(["questions", "comments", "bookmarks", "liked"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             style={{ padding: "8px 16px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: tab === t ? "#4f46e5" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
-            {t.charAt(0).toUpperCase() + t.slice(1)}
+            {{ questions: "پرسش‌ها", comments: "دیدگاه‌ها", bookmarks: "نشانک‌ها", liked: "پسندیده‌ها" }[t]}
           </button>
         ))}
       </div>
 
       {/* Content */}
-      {loading && <div style={{ textAlign: "center", padding: "40px 0", color: "#9ca3af" }}>Loading...</div>}
+      {loading && <div style={{ textAlign: "center", padding: "40px 0", color: "#9ca3af" }}>در حال بارگذاری...</div>}
 
       {!loading && items.length === 0 && (
         <div style={{ textAlign: "center", padding: "48px 0", color: "#9ca3af" }}>
           <div style={{ fontSize: 40, marginBottom: 8 }}>📭</div>
-          <p style={{ fontSize: 14 }}>Nothing here yet.</p>
+          <p style={{ fontSize: 14 }}>هنوز چیزی اینجا نیست.</p>
           {tab === "questions" && (
             <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", marginTop: 12 }}>
-              Ask a Question
+              پرسشتان را مطرح کنید
             </Link>
           )}
         </div>
@@ -108,10 +108,10 @@ export default function DashboardPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {(items as Array<{ slug: string; title: string; status: string; likes_count: number; comments_count: number; created_at: string }>).map((q) => (
             <Link key={q.slug} href={`/questions/${q.slug}`} style={{ textDecoration: "none" }}>
-              <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
+              <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
                 <p style={{ fontSize: 15, fontWeight: 600, color: "#111827", margin: "0 0 6px" }}>{q.title}</p>
                 <div style={{ fontSize: 12, color: "#9ca3af", display: "flex", gap: 12 }}>
-                  <span style={{ background: q.status === "open" ? "#dcfce7" : "#fee2e2", color: q.status === "open" ? "#166534" : "#991b1b", padding: "1px 8px", borderRadius: 99, fontWeight: 600 }}>{q.status}</span>
+                  <span style={{ background: q.status === "open" ? "#dcfce7" : "#fee2e2", color: q.status === "open" ? "#166534" : "#991b1b", padding: "1px 8px", borderRadius: 99, fontWeight: 600 }}>{q.status === "open" ? "باز" : "بسته"}</span>
                   <span>♥ {q.likes_count}</span>
                   <span>💬 {q.comments_count}</span>
                 </div>
@@ -125,8 +125,8 @@ export default function DashboardPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {(items as Array<{ id: string; body: string; question_slug: string; question_title: string }>).map((c) => (
             <Link key={c.id} href={`/questions/${c.question_slug}`} style={{ textDecoration: "none" }}>
-              <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
-                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 4px" }}>on <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
+              <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
+                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 4px" }}>در <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
                 <p style={{ fontSize: 14, color: "#374151", margin: 0, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{c.body}</p>
               </div>
             </Link>
@@ -135,9 +135,9 @@ export default function DashboardPage() {
       )}
 
       {!loading && items.length > 0 && (tab === "bookmarks" || tab === "liked") && (
-        <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
+        <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
           <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>
-            {items.length} question ID{items.length !== 1 ? "s" : ""} {tab}. Visit <Link href="/questions" style={{ color: "#4f46e5" }}>Questions</Link> to browse them.
+            {items.length} شناسه پرسش در بخش «{tab === "bookmarks" ? "نشانک‌ها" : "پسندیده‌ها"}». برای مشاهده آن‌ها به بخش <Link href="/questions" style={{ color: "#4f46e5" }}>پرسش‌ها</Link> بروید.
           </p>
         </div>
       )}

@@ -87,7 +87,7 @@ function UserDetail() {
             <h1 style={{ fontSize: 20, fontWeight: 700, color: "#111827", margin: "0 0 2px" }}>{user.username}</h1>
             <p style={{ fontSize: 13, color: "#6b7280", margin: 0 }}>{user.email}</p>
           </div>
-          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+          <div style={{ marginInlineStart: "auto", display: "flex", gap: 8 }}>
             <span style={{ background: user.is_active ? "#dcfce7" : "#fee2e2", color: user.is_active ? "#166534" : "#991b1b", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 99 }}>
               {user.is_active ? "Active" : "Banned"}
             </span>

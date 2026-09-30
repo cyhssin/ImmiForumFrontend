@@ -11,7 +11,7 @@ type Status = "idle" | "verifying" | "success" | "error" | "resending" | "resent
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={<div className="min-h-[70vh] flex items-center justify-center text-gray-500">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-[70vh] flex items-center justify-center text-gray-500">در حال بارگذاری...</div>}>
       <VerifyEmailContent />
     </Suspense>
   );
@@ -33,7 +33,7 @@ function VerifyEmailContent() {
       .then(() => setStatus("success"))
       .catch((err) => {
         setStatus("error");
-        setMessage(err instanceof ApiError ? err.message : "Verification failed.");
+        setMessage(err instanceof ApiError ? err.message : "تأیید ایمیل ناموفق بود.");
       });
   }, [token]);
 
@@ -45,7 +45,7 @@ function VerifyEmailContent() {
       setStatus("resent");
     } catch (err) {
       setStatus("error");
-      setMessage(err instanceof ApiError ? err.message : "Could not resend email.");
+      setMessage(err instanceof ApiError ? err.message : "ارسال دوباره ایمیل ممکن نشد.");
     }
   }
 
@@ -57,12 +57,12 @@ function VerifyEmailContent() {
         {!token && justRegistered && status === "idle" && (
           <>
             <div className="text-5xl">📬</div>
-            <h1 className="text-xl font-bold text-gray-900">Check your inbox</h1>
+            <h1 className="text-xl font-bold text-gray-900">صندوق ورودی خود را بررسی کنید</h1>
             <p className="text-sm text-gray-500">
-              We sent a verification link to <strong>{email}</strong>.
-              Click it to activate your account.
+              پیوند تأیید را به <strong>{email}</strong> فرستادیم.
+              برای فعال‌کردن حساب خود، روی پیوند کلیک کنید.
             </p>
-            <p className="text-xs text-gray-400">Did not receive it? Check spam or resend below.</p>
+            <p className="text-xs text-gray-400">ایمیلی دریافت نکردید؟ پوشه هرزنامه را بررسی کنید یا از پایین دوباره ارسال کنید.</p>
           </>
         )}
 
@@ -70,8 +70,8 @@ function VerifyEmailContent() {
         {!token && !justRegistered && status === "idle" && (
           <>
             <div className="text-5xl">✉️</div>
-            <h1 className="text-xl font-bold text-gray-900">Verify your email</h1>
-            <p className="text-sm text-gray-500">Enter your email to receive a new verification link.</p>
+            <h1 className="text-xl font-bold text-gray-900">تأیید ایمیل</h1>
+            <p className="text-sm text-gray-500">برای دریافت پیوند تازه، ایمیل خود را وارد کنید.</p>
           </>
         )}
 
@@ -79,7 +79,7 @@ function VerifyEmailContent() {
         {status === "verifying" && (
           <>
             <div className="text-5xl animate-pulse">🔄</div>
-            <p className="text-gray-600">Verifying your email…</p>
+            <p className="text-gray-600">در حال تأیید ایمیل...</p>
           </>
         )}
 
@@ -87,10 +87,10 @@ function VerifyEmailContent() {
         {status === "success" && (
           <>
             <div className="text-5xl">✅</div>
-            <h1 className="text-xl font-bold text-gray-900">Email verified!</h1>
-            <p className="text-sm text-gray-500">Your account is now active. You can sign in.</p>
+            <h1 className="text-xl font-bold text-gray-900">ایمیل شما تأیید شد!</h1>
+            <p className="text-sm text-gray-500">حساب شما فعال شد. اکنون می‌توانید وارد شوید.</p>
             <Link href="/auth/login">
-              <Button className="w-full">Go to login</Button>
+              <Button className="w-full">ورود به حساب</Button>
             </Link>
           </>
         )}
@@ -99,9 +99,9 @@ function VerifyEmailContent() {
         {status === "error" && (
           <>
             <div className="text-5xl">❌</div>
-            <h1 className="text-xl font-bold text-gray-900">Verification failed</h1>
+            <h1 className="text-xl font-bold text-gray-900">تأیید ایمیل انجام نشد</h1>
             <p className="text-sm text-red-600">{message}</p>
-            <p className="text-xs text-gray-400">The link may have expired. Request a new one below.</p>
+            <p className="text-xs text-gray-400">ممکن است پیوند منقضی شده باشد. از پایین پیوند تازه‌ای درخواست کنید.</p>
           </>
         )}
 
@@ -109,8 +109,8 @@ function VerifyEmailContent() {
         {status === "resent" && (
           <>
             <div className="text-5xl">📨</div>
-            <h1 className="text-xl font-bold text-gray-900">Email sent!</h1>
-            <p className="text-sm text-gray-500">Check your inbox for the new verification link.</p>
+            <h1 className="text-xl font-bold text-gray-900">ایمیل ارسال شد!</h1>
+            <p className="text-sm text-gray-500">پیوند تأیید تازه را در صندوق ورودی خود بررسی کنید.</p>
           </>
         )}
 
@@ -121,18 +121,18 @@ function VerifyEmailContent() {
               type="email"
               value={resendEmail}
               onChange={(e) => setResendEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder="ایمیل شما"
               required
               className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500"
             />
             <Button type="submit" variant="secondary" loading={status === "resending"}>
-              Resend verification email
+              ارسال دوباره ایمیل تأیید
             </Button>
           </form>
         )}
 
         <Link href="/auth/login" className="text-sm text-indigo-600 hover:underline">
-          Back to login
+          بازگشت به صفحه ورود
         </Link>
       </div>
     </div>

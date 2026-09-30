@@ -26,25 +26,24 @@ export default function HomePage() {
       {/* Hero Header */}
       <div className="text-center max-w-2xl">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Welcome to <span className="text-indigo-600">Immiforum</span>
+          <span className="text-indigo-600">Immigrants Team</span>
         </h1>
         <p className="text-gray-500 text-lg">
-          A community where immigrants ask questions, share experiences,
-          and help each other navigate visas, documents, and life abroad.
+          اینجا مهاجران کنار هم جمع می‌شوند تا سؤال‌هایشان را مطرح کنند، تجربه‌هایشان را به اشتراک بگذارند و در مسیر مهاجرت و زندگی در خارج از کشور، به یکدیگر کمک کنند.
         </p>
         <div className="mt-6 flex gap-3 justify-center">
           <Link
             href="/questions"
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700"
           >
-            Browse Questions
+            پرسش‌ها را ببینید
           </Link>
           {!isAuthenticated && (
             <Link
               href="/auth/register"
               className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50"
             >
-              Join the Community
+              به انجمن بپیوندید
             </Link>
           )}
         </div>
@@ -73,9 +72,9 @@ export default function HomePage() {
       {/* Feature Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl text-center">
         {[
-          { icon: "❓", title: "Ask Questions", desc: "Get answers from people who have been there." },
-          { icon: "🌍", title: "Share Experiences", desc: "Help others with your immigration journey." },
-          { icon: "🔖", title: "Save & Follow", desc: "Bookmark answers and follow helpful members." },
+          { icon: "❓", title: "سؤال بپرسید", desc: "پاسخ را از کسانی بگیرید که این مسیر را رفته‌اند." },
+          { icon: "🌍", title: "تجربه‌تان را بگویید", desc: "تجربه‌تان می‌تواند راهگشای دیگران باشد." },
+          { icon: "🔖", title: "ذخیره و دنبال کنید", desc: "پاسخ‌های مفید را ذخیره کنید و اعضای موردعلاقه‌تان را دنبال کنید." },
         ].map((f) => (
           <div key={f.title} className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="text-3xl mb-2">{f.icon}</div>

@@ -47,18 +47,18 @@ export default function RegisterPage() {
     <div className="min-h-[70vh] flex items-center justify-center">
       <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-8 flex flex-col gap-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Create account</h1>
-          <p className="text-sm text-gray-500 mt-1">Join the Immiforum community</p>
+          <h1 className="text-2xl font-bold text-gray-900">ایجاد حساب کاربری</h1>
+          <p className="text-sm text-gray-500 mt-1">به انجمن ایمی‌فروم بپیوندید</p>
         </div>
 
         {Boolean(error) && <ErrorMessage error={error} />}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
-            label="Email"
+            label="ایمیل"
             name="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="name@example.com"
             value={form.email}
             onChange={handleChange}
             error={fieldErrors.email}
@@ -66,20 +66,20 @@ export default function RegisterPage() {
             autoFocus
           />
           <Input
-            label="Username"
+            label="نام کاربری"
             name="username"
             type="text"
-            placeholder="your_username"
+            placeholder="username"
             value={form.username}
             onChange={handleChange}
             error={fieldErrors.username}
             required
           />
           <p className="text-xs text-gray-400 -mt-2">
-            3–50 characters, letters, numbers and underscores only.
+            ۳ تا ۵۰ نویسه؛ فقط حروف انگلیسی، اعداد و زیرخط مجاز است.
           </p>
           <Input
-            label="Password"
+            label="گذرواژه"
             name="password"
             type="password"
             placeholder="••••••••"
@@ -89,14 +89,14 @@ export default function RegisterPage() {
             required
           />
           <Button type="submit" loading={loading} className="w-full mt-1">
-            Create account
+            ایجاد حساب کاربری
           </Button>
         </form>
 
         <p className="text-center text-sm text-gray-500">
-          Already have an account?{" "}
+          قبلاً حساب کاربری ساخته‌اید؟{" "}
           <Link href="/auth/login" className="text-indigo-600 font-medium hover:underline">
-            Sign in
+            وارد شوید
           </Link>
         </p>
       </div>

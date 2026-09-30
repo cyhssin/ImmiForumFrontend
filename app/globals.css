@@ -22,9 +22,21 @@
 
 body {
   min-height: 100vh;
+  direction: rtl;
   background: linear-gradient(155deg, #142729 0%, #0c191b 44%, #091315 100%) fixed !important;
   color: var(--foreground) !important;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "IRANSans", "IRANSansWeb", "Iranian Sans", Tahoma, sans-serif;
+}
+
+input,
+textarea,
+select {
+  text-align: start;
+}
+
+[dir="rtl"] .dropdown-menu {
+  right: auto;
+  left: 0;
 }
 
 header,
