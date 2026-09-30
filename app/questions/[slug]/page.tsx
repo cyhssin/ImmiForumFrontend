@@ -111,7 +111,12 @@ export default function QuestionDetailPage() {
     if (!question || !confirm("Delete this question? This cannot be undone.")) return;
     setDeleting(true);
     try {
-      await questionsApi.delete(question.slug);
+      const canModerate = auth?.user?.role === "admin" || auth?.user?.role === "moderator";
+      if (canModerate) {
+        await questionsApi.forceDelete(question.id);
+      } else {
+        await questionsApi.delete(question.id);
+      }
       router.push("/questions");
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : "Delete failed");

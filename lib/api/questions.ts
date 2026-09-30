@@ -74,8 +74,11 @@ export const questionsApi = {
   update: (slug: string, data: Partial<CreateQuestionRequest>) =>
     api.put<Question>(`/questions/${slug}`, data),
 
-  delete: (slug: string) =>
-    api.delete<null>(`/questions/${slug}`),
+  delete: (questionId: string) =>
+    api.delete<null>(`/questions/${questionId}`),
+
+  forceDelete: (questionId: string) =>
+    api.delete<null>(`/admin/questions/${questionId}`),
 
   categories: () =>
     api.get<{ items: Category[]; total: number }>("/categories"),
