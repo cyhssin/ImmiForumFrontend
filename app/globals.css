@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #0b1517;
+  --foreground: #e5efeb;
+  --surface: #132225;
+  --surface-raised: #1a2d30;
+  --surface-soft: #19292b;
+  --border: #304648;
+  --muted: #a5b9b4;
+  --accent: #8ad8b8;
+  --accent-strong: #246b58;
 }
 
 @theme inline {
@@ -12,15 +20,181 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  min-height: 100vh;
+  background: linear-gradient(155deg, #142729 0%, #0c191b 44%, #091315 100%) fixed !important;
+  color: var(--foreground) !important;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-  background: var(--background);
+header,
+.bg-white,
+[style*="background: white"],
+[style*="background:white"],
+[style*="background-color: white"] {
+  background-color: var(--surface) !important;
+}
+
+header {
+  border-color: var(--border) !important;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+main {
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+main h1,
+main h2,
+main h3,
+main h4,
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+[style*="#111827"],
+[style*="#1f2937"],
+[style*="#374151"],
+[style*="color: rgb(17, 24, 39)"],
+[style*="color: rgb(31, 41, 55)"],
+[style*="color: rgb(55, 65, 81)"] {
+  color: #e5efeb !important;
+}
+
+main h2 a {
+  color: #e5efeb !important;
+}
+
+.text-gray-600,
+.text-gray-500,
+.text-gray-400,
+.text-gray-300,
+[style*="#6b7280"],
+[style*="#9ca3af"],
+main p,
+[style*="color: rgb(107, 114, 128)"],
+[style*="color: rgb(156, 163, 175)"] {
+  color: var(--muted) !important;
+}
+
+.bg-gray-50,
+.bg-gray-100,
+[style*="background: #f9fafb"],
+[style*="background:#f9fafb"],
+[style*="background: #f3f4f6"],
+[style*="background:#f3f4f6"] {
+  background-color: var(--surface-soft) !important;
+}
+
+.border-gray-200,
+.border-gray-300,
+[style*="#e5e7eb"],
+[style*="#d1d5db"],
+[style*="border: 1px solid rgb(229, 231, 235)"] {
+  border-color: var(--border) !important;
+}
+
+.text-indigo-600,
+.hover\:text-indigo-600:hover,
+[style*="color: #4f46e5"],
+[style*="color:#4f46e5"],
+[style*="color: rgb(67, 56, 202)"] {
+  color: var(--accent) !important;
+}
+
+main a[href^="/questions?tag="] {
+  background-color: #203b36 !important;
+  color: #a9e5ca !important;
+  border: 1px solid #31564b;
+}
+
+.bg-indigo-600,
+[style*="background: #4f46e5"],
+[style*="background:#4f46e5"] {
+  background-color: var(--accent-strong) !important;
+}
+
+.hover\:bg-indigo-700:hover {
+  background-color: #2c8068 !important;
+}
+
+.focus\:border-indigo-500:focus {
+  border-color: var(--accent) !important;
+}
+
+.focus\:ring-indigo-500:focus,
+.focus\:ring-indigo-200:focus {
+  --tw-ring-color: rgb(138 216 184 / 38%) !important;
+}
+
+input,
+textarea,
+select {
+  color: var(--foreground);
+  background-color: var(--surface-raised);
+  border-color: var(--border);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #91a8a2;
+  opacity: 1;
+}
+
+hr {
+  border-color: var(--border);
+}
+
+[style*="#dcfce7"],
+[style*="#f0fdf4"],
+[style*="background: rgb(220, 252, 231)"],
+[style*="background: rgb(240, 253, 244)"],
+.bg-green-100 {
+  background-color: #18372e !important;
+  color: #a0e4c5 !important;
+}
+
+[style*="#fee2e2"],
+[style*="#fef2f2"],
+[style*="background: rgb(254, 226, 226)"],
+[style*="background: rgb(254, 242, 242)"],
+.bg-red-100 {
+  background-color: #3a2427 !important;
+  color: #ffaaa4 !important;
+}
+
+[style*="#fef9c3"],
+[style*="#fefce8"],
+[style*="#fffbeb"],
+[style*="background: rgb(254, 249, 195)"],
+[style*="background: rgb(254, 252, 232)"],
+[style*="background: rgb(255, 251, 235)"],
+.bg-yellow-100 {
+  background-color: #383421 !important;
+  color: #ead58f !important;
+}
+
+[style*="#dbeafe"],
+[style*="background: rgb(219, 234, 254)"],
+.bg-blue-100 {
+  background-color: #1d303a !important;
+  color: #a9d4e7 !important;
+}
+
+.text-red-600,
+.text-red-700 {
+  color: #ffaaa4 !important;
+}
+
+.text-green-600,
+.text-green-700 {
+  color: #a0e4c5 !important;
+}
+
+.text-yellow-700 {
+  color: #ead58f !important;
+}
+
+::selection {
+  color: #07120f;
+  background: #8ad8b8;
 }

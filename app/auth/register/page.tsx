@@ -51,7 +51,7 @@ export default function RegisterPage() {
           <p className="text-sm text-gray-500 mt-1">Join the Immiforum community</p>
         </div>
 
-        {error && <ErrorMessage error={error} />}
+        {Boolean(error) && <ErrorMessage error={error} />}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input

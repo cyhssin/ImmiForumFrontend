@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
@@ -16,6 +16,14 @@ function timeAgo(dateStr: string): string {
 }
 
 export default function QuestionsPage() {
+  return (
+    <Suspense fallback={<div style={{ textAlign: "center", padding: "48px 0" }}>Loading questions...</div>}>
+      <QuestionsContent />
+    </Suspense>
+  );
+}
+
+function QuestionsContent() {
   const { isAuthenticated } = useAuthStore();
   const router = useRouter();
   const searchParams = useSearchParams();

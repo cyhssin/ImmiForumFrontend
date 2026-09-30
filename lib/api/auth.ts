@@ -64,7 +64,7 @@ export const authApi = {
     api.post<AuthResponse>("/auth/refresh", { refresh_token }),
 
   verifyEmail: (token: string) =>
-    api.get<{ message: string }>(`/auth/verify-email?token=${token}`),
+    api.post<{ message: string }>("/auth/verify-email", { token }),
 
   resendVerification: (email: string) =>
     api.post<{ message: string }>("/auth/resend-verification", { email }),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authApi } from "@/lib/api/auth";
@@ -10,6 +10,14 @@ import Button from "@/components/ui/Button";
 type Status = "idle" | "verifying" | "success" | "error" | "resending" | "resent";
 
 export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[70vh] flex items-center justify-center text-gray-500">Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
+
+function VerifyEmailContent() {
   const params = useSearchParams();
   const token = params.get("token");
   const email = params.get("email") ?? "";
@@ -107,7 +115,7 @@ export default function VerifyEmailPage() {
         )}
 
         {/* Resend form — shown when not verifying/success */}
-        {(status === "idle" || status === "error") && (
+        {(status === "idle" || status === "error" || status === "resending") && (
           <form onSubmit={handleResend} className="flex flex-col gap-3 mt-2">
             <input
               type="email"
