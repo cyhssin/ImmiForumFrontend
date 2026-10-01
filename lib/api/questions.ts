@@ -1,12 +1,12 @@
 import { api } from "./client";
 
 export interface Tag {
-  id: number;
+  id: string;
   name: string;
 }
 
 export interface Category {
-  id: number;
+  id: string;
   name: string;
   slug: string;
 }
@@ -44,8 +44,8 @@ export interface QuestionListResponse {
 export interface CreateQuestionRequest {
   title: string;
   body: string;
-  category_id?: number | null;
-  tags?: string[];
+  category_id?: string | null;
+  tag_names?: string[];
 }
 
 export const questionsApi = {

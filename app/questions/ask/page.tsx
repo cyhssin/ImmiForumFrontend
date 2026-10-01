@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth";
-import { questionsApi, Category, Tag } from "@/lib/api/questions";
+import { questionsApi, Category } from "@/lib/api/questions";
+import { ApiError } from "@/lib/api/client";
 
 export default function AskPage() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function AskPage() {
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [categoryId, setCategoryId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,11 +50,15 @@ export default function AskPage() {
         title,
         body,
         category_id: categoryId ?? undefined,
-        tags,
+        tag_names: tags,
       });
       router.push(`/questions/${q.slug}`);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Failed to create question");
+      if (err instanceof ApiError && err.details?.length) {
+        setError(err.details.map(({ field, message }) => `${field}: ${message}`).join(" | "));
+      } else {
+        setError(err instanceof Error ? err.message : "Failed to create question");
+      }
     } finally {
       setLoading(false);
     }
@@ -96,6 +101,7 @@ export default function AskPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="عنوان پرسش خود را وارد کنید"
               required
+              minLength={10}
               maxLength={200}
               style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "10px 12px", fontSize: 14, outline: "none" }}
             />
@@ -110,6 +116,7 @@ export default function AskPage() {
               onChange={(e) => setBody(e.target.value)}
               placeholder="توضیحات پرسش خود را وارد کنید"
               required
+              minLength={20}
               rows={8}
               style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "10px 12px", fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit" }}
             />
@@ -121,7 +128,7 @@ export default function AskPage() {
               <label style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>دسته بندی</label>
               <select
                 value={categoryId ?? ""}
-                onChange={(e) => setCategoryId(e.target.value ? Number(e.target.value) : null)}
+                onChange={(e) => setCategoryId(e.target.value || null)}
                 style={{ border: "1px solid #d1d5db", borderRadius: 8, padding: "10px 12px", fontSize: 14, outline: "none", background: "white" }}
               >
                 <option value="">No category</option>
