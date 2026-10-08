@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  --background: #0b1517;
-  --foreground: #e5efeb;
-  --surface: #132225;
-  --surface-raised: #1a2d30;
-  --surface-soft: #19292b;
-  --border: #304648;
-  --muted: #a5b9b4;
-  --accent: #8ad8b8;
-  --accent-strong: #246b58;
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #111827;
+  --surface: #ffffff;
+  --surface-raised: #f9fafb;
+  --surface-soft: #dff2ff;
+  --border: #dff2ff;
+  --muted: #4b5563;
+  --accent: #0086cd;
+  --accent-strong: #0086cd;
 }
 
 @theme inline {
@@ -23,7 +23,7 @@
 body {
   min-height: 100vh;
   direction: rtl;
-  background: linear-gradient(155deg, #142729 0%, #0c191b 44%, #091315 100%) fixed !important;
+  background: linear-gradient(155deg, #ffffff 0%, #f9fafb 58%, #dff2ff 100%) fixed !important;
   color: var(--foreground) !important;
   font-family: "IRANSans", "IRANSansWeb", "Iranian Sans", Tahoma, sans-serif;
 }
@@ -49,7 +49,7 @@ header,
 
 header {
   border-color: var(--border) !important;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  box-shadow: 0 8px 24px rgb(17 24 39 / 6%);
 }
 
 main {
@@ -69,11 +69,11 @@ main h4,
 [style*="color: rgb(17, 24, 39)"],
 [style*="color: rgb(31, 41, 55)"],
 [style*="color: rgb(55, 65, 81)"] {
-  color: #e5efeb !important;
+  color: #111827 !important;
 }
 
 main h2 a {
-  color: #e5efeb !important;
+  color: #111827 !important;
 }
 
 .text-gray-600,
@@ -89,12 +89,15 @@ main p,
 }
 
 .bg-gray-50,
-.bg-gray-100,
 [style*="background: #f9fafb"],
-[style*="background:#f9fafb"],
+[style*="background:#f9fafb"] {
+  background-color: #f9fafb !important;
+}
+
+.bg-gray-100,
 [style*="background: #f3f4f6"],
 [style*="background:#f3f4f6"] {
-  background-color: var(--surface-soft) !important;
+  background-color: #dff2ff !important;
 }
 
 .border-gray-200,
@@ -107,26 +110,56 @@ main p,
 
 .text-indigo-600,
 .hover\:text-indigo-600:hover,
-[style*="color: #4f46e5"],
-[style*="color:#4f46e5"],
+[style*="color: #0086cd"],
+[style*="color:#0086cd"],
 [style*="color: rgb(67, 56, 202)"] {
   color: var(--accent) !important;
 }
 
 main a[href^="/questions?tag="] {
-  background-color: #203b36 !important;
-  color: #a9e5ca !important;
-  border: 1px solid #31564b;
+  background-color: #dff2ff !important;
+  color: #0086cd !important;
+  border: 1px solid #dff2ff;
 }
 
 .bg-indigo-600,
-[style*="background: #4f46e5"],
-[style*="background:#4f46e5"] {
+[style*="background: #0086cd"],
+[style*="background:#0086cd"] {
   background-color: var(--accent-strong) !important;
 }
 
+[style*="background:#a5b4fc"],
+[style*="background: #a5b4fc"] {
+  background-color: #07a4ea !important;
+}
+
+[style*="background:#eef2ff"],
+[style*="background: #eef2ff"],
+[style*="background:#ede9fe"],
+[style*="background: #ede9fe"],
+[style*="background: rgb(238, 242, 255)"] {
+  background-color: #dff2ff !important;
+}
+
+[style*="color:#4338ca"],
+[style*="color: #4338ca"],
+[style*="color: rgb(67, 56, 202)"],
+[style*="color:#5b21b6"],
+[style*="color: #5b21b6"] {
+  color: #0086cd !important;
+}
+
+[style*="color:#6366f1"],
+[style*="color: #6366f1"] {
+  color: #07a4ea !important;
+}
+
+[style*="#a5b4fc"] {
+  border-color: #07a4ea !important;
+}
+
 .hover\:bg-indigo-700:hover {
-  background-color: #2c8068 !important;
+  background-color: #07a4ea !important;
 }
 
 .focus\:border-indigo-500:focus {
@@ -135,20 +168,20 @@ main a[href^="/questions?tag="] {
 
 .focus\:ring-indigo-500:focus,
 .focus\:ring-indigo-200:focus {
-  --tw-ring-color: rgb(138 216 184 / 38%) !important;
+  --tw-ring-color: rgb(7 164 234 / 32%) !important;
 }
 
 input,
 textarea,
 select {
-  color: var(--foreground);
-  background-color: var(--surface-raised);
+  color: #111827;
+  background-color: #ffffff;
   border-color: var(--border);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #91a8a2;
+  color: #6b7280;
   opacity: 1;
 }
 
@@ -161,8 +194,8 @@ hr {
 [style*="background: rgb(220, 252, 231)"],
 [style*="background: rgb(240, 253, 244)"],
 .bg-green-100 {
-  background-color: #18372e !important;
-  color: #a0e4c5 !important;
+  background-color: #f0fdf4 !important;
+  color: #166534 !important;
 }
 
 [style*="#fee2e2"],
@@ -170,8 +203,8 @@ hr {
 [style*="background: rgb(254, 226, 226)"],
 [style*="background: rgb(254, 242, 242)"],
 .bg-red-100 {
-  background-color: #3a2427 !important;
-  color: #ffaaa4 !important;
+  background-color: #fef2f2 !important;
+  color: #b91c1c !important;
 }
 
 [style*="#fef9c3"],
@@ -181,32 +214,32 @@ hr {
 [style*="background: rgb(254, 252, 232)"],
 [style*="background: rgb(255, 251, 235)"],
 .bg-yellow-100 {
-  background-color: #383421 !important;
-  color: #ead58f !important;
+  background-color: #fffbeb !important;
+  color: #92400e !important;
 }
 
 [style*="#dbeafe"],
 [style*="background: rgb(219, 234, 254)"],
 .bg-blue-100 {
-  background-color: #1d303a !important;
-  color: #a9d4e7 !important;
+  background-color: #dff2ff !important;
+  color: #0086cd !important;
 }
 
 .text-red-600,
 .text-red-700 {
-  color: #ffaaa4 !important;
+  color: #b91c1c !important;
 }
 
 .text-green-600,
 .text-green-700 {
-  color: #a0e4c5 !important;
+  color: #166534 !important;
 }
 
 .text-yellow-700 {
-  color: #ead58f !important;
+  color: #92400e !important;
 }
 
 ::selection {
-  color: #07120f;
-  background: #8ad8b8;
+  color: #ffffff;
+  background: #0086cd;
 }

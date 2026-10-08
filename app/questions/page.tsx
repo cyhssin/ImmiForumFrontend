@@ -63,7 +63,7 @@ function QuestionsContent() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, gap: 16, flexWrap: "wrap" }}>
         <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: 0 }}>پرسش‌ها</h1>
         {isAuthenticated && (
-          <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "8px 18px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+          <Link href="/questions/ask" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "8px 18px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
             بپرسید
           </Link>
         )}
@@ -79,7 +79,7 @@ function QuestionsContent() {
           placeholder="جست و جو در پرسش‌ها"
           style={{ flex: 1, border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, outline: "none" }}
         />
-        <button type="submit" style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+        <button type="submit" style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
           جست و جو
         </button>
         {search && (
@@ -93,7 +93,7 @@ function QuestionsContent() {
       {tag && (
         <p style={{ fontSize: 13, color: "#6b7280", margin: "-12px 0 16px" }}>
           Tagged <strong>#{tag}</strong>{" "}
-          <Link href={search ? `/questions?search=${encodeURIComponent(search)}` : "/questions"} onClick={() => setPage(1)} style={{ color: "#4f46e5" }}>
+          <Link href={search ? `/questions?search=${encodeURIComponent(search)}` : "/questions"} onClick={() => setPage(1)} style={{ color: "#0086cd" }}>
             Clear tag
           </Link>
         </p>
@@ -129,7 +129,7 @@ function QuestionsContent() {
             {search ? `No results for "${search}"` : tag ? `No questions tagged "${tag}"` : "اولین سؤال را شما بپرسید و گفتگو را شروع کنید"}
           </p>
           {isAuthenticated && (
-            <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+            <Link href="/questions/ask" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
               Ask a Question
             </Link>
           )}

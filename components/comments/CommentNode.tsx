@@ -129,7 +129,7 @@ export function CommentNode({
   const indentLeft = Math.min(depth * 20, 80);
 
   return (
-    <div style={{ marginInlineStart: indentLeft, marginTop: 12 }}>
+    <div id={`comment-${comment.id}`} style={{ marginInlineStart: indentLeft, marginTop: 12 }}>
       <div style={{
         background: depth === 0 ? "white" : "#f9fafb",
         border: "1px solid #e5e7eb",
@@ -139,7 +139,7 @@ export function CommentNode({
       }}>
         {/* Author row */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-          <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, flexShrink: 0 }}>
+          <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, flexShrink: 0 }}>
             {comment.author.username.slice(0, 2).toUpperCase()}
           </div>
           <span style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>{comment.author.username}</span>
@@ -164,7 +164,7 @@ export function CommentNode({
             {editError && <p style={{ fontSize: 12, color: "#dc2626", margin: 0 }}>{editError}</p>}
             <div style={{ display: "flex", gap: 8 }}>
               <button type="submit" disabled={editLoading}
-                style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 6, padding: "6px 14px", fontSize: 13, cursor: "pointer" }}>
+                style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 6, padding: "6px 14px", fontSize: 13, cursor: "pointer" }}>
                 {editLoading ? "Saving..." : "Save"}
               </button>
               <button type="button" onClick={() => { setEditing(false); setEditBody(comment.body); }}
@@ -220,7 +220,7 @@ export function CommentNode({
           {replyError && <p style={{ fontSize: 12, color: "#dc2626", margin: 0 }}>{replyError}</p>}
           <div style={{ display: "flex", gap: 8 }}>
             <button type="submit" disabled={replyLoading}
-              style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 6, padding: "6px 14px", fontSize: 13, cursor: "pointer" }}>
+              style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 6, padding: "6px 14px", fontSize: 13, cursor: "pointer" }}>
               {replyLoading ? "Posting..." : "Post Reply"}
             </button>
             <button type="button" onClick={() => { setShowReplyForm(false); setReplyBody(""); }}

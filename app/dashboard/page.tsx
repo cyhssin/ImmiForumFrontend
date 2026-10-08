@@ -83,7 +83,7 @@ export default function DashboardPage() {
       <div style={{ display: "flex", gap: 4, marginBottom: 16, flexWrap: "wrap" }}>
         {(["questions", "comments", "bookmarks", "liked"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
-            style={{ padding: "8px 16px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: tab === t ? "#4f46e5" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
+            style={{ padding: "8px 16px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: tab === t ? "#0086cd" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
             {{ questions: "پرسش‌ها", comments: "دیدگاه‌ها", bookmarks: "نشانک‌ها", liked: "پسندیده‌ها" }[t]}
           </button>
         ))}
@@ -97,7 +97,7 @@ export default function DashboardPage() {
           <div style={{ fontSize: 40, marginBottom: 8 }}>📭</div>
           <p style={{ fontSize: 14 }}>هنوز چیزی اینجا نیست.</p>
           {tab === "questions" && (
-            <Link href="/questions/ask" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", marginTop: 12 }}>
+            <Link href="/questions/ask" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", marginTop: 12 }}>
               پرسشتان را مطرح کنید
             </Link>
           )}
@@ -126,7 +126,7 @@ export default function DashboardPage() {
           {(items as Array<{ id: string; body: string; question_slug: string; question_title: string }>).map((c) => (
             <Link key={c.id} href={`/questions/${c.question_slug}`} style={{ textDecoration: "none" }}>
               <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
-                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 4px" }}>در <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
+                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 4px" }}>در <strong style={{ color: "#0086cd" }}>{c.question_title}</strong></p>
                 <p style={{ fontSize: 14, color: "#374151", margin: 0, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{c.body}</p>
               </div>
             </Link>
@@ -137,7 +137,7 @@ export default function DashboardPage() {
       {!loading && items.length > 0 && (tab === "bookmarks" || tab === "liked") && (
         <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
           <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>
-            {items.length} شناسه پرسش در بخش «{tab === "bookmarks" ? "نشانک‌ها" : "پسندیده‌ها"}». برای مشاهده آن‌ها به بخش <Link href="/questions" style={{ color: "#4f46e5" }}>پرسش‌ها</Link> بروید.
+            {items.length} شناسه پرسش در بخش «{tab === "bookmarks" ? "نشانک‌ها" : "پسندیده‌ها"}». برای مشاهده آن‌ها به بخش <Link href="/questions" style={{ color: "#0086cd" }}>پرسش‌ها</Link> بروید.
           </p>
         </div>
       )}

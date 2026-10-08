@@ -158,7 +158,7 @@ export default function QuestionDetailPage() {
       <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8, padding: 16, color: "#dc2626", fontSize: 14 }}>
         {error ?? "Question not found"}
       </div>
-      <Link href="/questions" style={{ display: "inline-block", marginTop: 16, color: "#4f46e5", fontSize: 14 }}>
+      <Link href="/questions" style={{ display: "inline-block", marginTop: 16, color: "#0086cd", fontSize: 14 }}>
         ← Back to questions
       </Link>
     </div>
@@ -206,7 +206,7 @@ export default function QuestionDetailPage() {
         )}
 
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#6b7280", marginBottom: 20 }}>
-          <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700 }}>
+          <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700 }}>
             {question.author.username.slice(0, 2).toUpperCase()}
           </div>
           <Link href={`/u/${question.author.username}`} style={{ color: "#374151", fontWeight: 600, textDecoration: "none" }}>
@@ -231,7 +231,7 @@ export default function QuestionDetailPage() {
           <div style={{ marginInlineStart: "auto", display: "flex", gap: 8 }}>
             {isAuthor && (
               <Link href={`/questions/${question.slug}/edit`}
-                style={{ fontSize: 13, color: "#4f46e5", textDecoration: "none", padding: "6px 12px", border: "1px solid #a5b4fc", borderRadius: 8 }}>
+                style={{ fontSize: 13, color: "#0086cd", textDecoration: "none", padding: "6px 12px", border: "1px solid #a5b4fc", borderRadius: 8 }}>
                 Edit
               </Link>
             )}
@@ -257,7 +257,7 @@ export default function QuestionDetailPage() {
             style={{ background: "white", border: "1px solid #fde68a", borderRadius: 6, padding: "5px 12px", fontSize: 13, cursor: "pointer", color: "#92400e" }}>
             {question.status === "open" ? "🔒 Close" : "🔓 Reopen"}
           </button>
-          <Link href="/admin/moderation-logs" style={{ fontSize: 13, color: "#4f46e5", marginInlineStart: "auto" }}>
+          <Link href="/admin/moderation-logs" style={{ fontSize: 13, color: "#0086cd", marginInlineStart: "auto" }}>
             View logs →
           </Link>
         </div>

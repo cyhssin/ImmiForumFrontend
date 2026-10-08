@@ -247,7 +247,7 @@ export default function EditQuestionPage() {
 
           <div style={{ display: "flex", gap: 12, paddingTop: 8 }}>
             <button type="submit" disabled={saving || title.length < 10 || body.length < 20}
-              style={{ background: (saving || title.length < 10 || body.length < 20) ? "#a5b4fc" : "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 15, fontWeight: 600, cursor: (saving || title.length < 10 || body.length < 20) ? "not-allowed" : "pointer" }}>
+              style={{ background: (saving || title.length < 10 || body.length < 20) ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 15, fontWeight: 600, cursor: (saving || title.length < 10 || body.length < 20) ? "not-allowed" : "pointer" }}>
               {saving ? "Saving..." : "Save Changes"}
             </button>
             <Link href={`/questions/${slug}`}

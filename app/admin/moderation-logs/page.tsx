@@ -59,12 +59,12 @@ function LogsTable() {
       {/* Filter */}
       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
         <button onClick={() => setActionFilter("")}
-          style={{ padding: "6px 14px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: !actionFilter ? "#4f46e5" : "#f3f4f6", color: !actionFilter ? "white" : "#6b7280" }}>
+          style={{ padding: "6px 14px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: !actionFilter ? "#0086cd" : "#f3f4f6", color: !actionFilter ? "white" : "#6b7280" }}>
           All
         </button>
         {actions.map((a) => (
           <button key={a} onClick={() => setActionFilter(a)}
-            style={{ padding: "6px 14px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: actionFilter === a ? "#4f46e5" : "#f3f4f6", color: actionFilter === a ? "white" : "#6b7280" }}>
+            style={{ padding: "6px 14px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", background: actionFilter === a ? "#0086cd" : "#f3f4f6", color: actionFilter === a ? "white" : "#6b7280" }}>
             {a.replace(/_/g, " ")}
           </button>
         ))}

@@ -90,7 +90,7 @@ function AdminUsers() {
           style={{ flex: 1, border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, outline: "none" }}
         />
         <button type="submit"
-          style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+          style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
           Search
         </button>
         {search && (
@@ -119,7 +119,7 @@ function AdminUsers() {
                 <tr key={user.id} style={{ borderBottom: i < users.length - 1 ? "1px solid #f3f4f6" : "none" }}>
                   <td style={{ padding: "12px 16px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
+                      <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
                         {user.username.slice(0, 2).toUpperCase()}
                       </div>
                       <Link href={`/admin/users/${user.id}`} style={{ fontSize: 14, fontWeight: 600, color: "#111827", textDecoration: "none" }}>
@@ -137,7 +137,7 @@ function AdminUsers() {
                   <td style={{ padding: "12px 16px" }}>
                     <div style={{ display: "flex", gap: 8 }}>
                       <Link href={`/admin/users/${user.id}`}
-                        style={{ fontSize: 12, color: "#4f46e5", textDecoration: "none", padding: "4px 10px", border: "1px solid #a5b4fc", borderRadius: 6 }}>
+                        style={{ fontSize: 12, color: "#0086cd", textDecoration: "none", padding: "4px 10px", border: "1px solid #a5b4fc", borderRadius: 6 }}>
                         View
                       </Link>
                       <button

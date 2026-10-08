@@ -69,7 +69,7 @@ export default function AskPage() {
       <div style={{ maxWidth: 600, margin: "80px auto", textAlign: "center" }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>🔒</div>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: "#111827", marginBottom: 8 }}>Sign in to ask a question</h2>
-        <Link href="/auth/login" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+        <Link href="/auth/login" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
           Sign in
         </Link>
       </div>
@@ -170,7 +170,7 @@ export default function AskPage() {
           <button
             type="submit"
             disabled={loading}
-            style={{ background: loading ? "#a5b4fc" : "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 15, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}
+            style={{ background: loading ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 15, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}
           >
             {loading ? "Posting..." : "Post Question"}
           </button>

@@ -80,7 +80,7 @@ function UserDetail() {
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 28, marginBottom: 20 }}>
         {/* User header */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-          <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 700 }}>
+          <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 700 }}>
             {user.username.slice(0, 2).toUpperCase()}
           </div>
           <div>
@@ -129,7 +129,7 @@ function UserDetail() {
               }
             </select>
             <button onClick={handleRoleChange} disabled={savingRole || selectedRole === user.role}
-              style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer", opacity: selectedRole === user.role ? 0.5 : 1 }}>
+              style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer", opacity: selectedRole === user.role ? 0.5 : 1 }}>
               {savingRole ? "Saving..." : "Update Role"}
             </button>
           </div>
@@ -149,7 +149,7 @@ function UserDetail() {
       </div>
 
       <Link href={`/u/${user.username}`}
-        style={{ fontSize: 14, color: "#4f46e5", textDecoration: "none" }}>
+        style={{ fontSize: 14, color: "#0086cd", textDecoration: "none" }}>
         View public profile →
       </Link>
     </div>

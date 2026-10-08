@@ -88,7 +88,7 @@ export default function LoginPage() {
         />
         <button
           type="submit"
-          style={{ background: "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "10px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+          style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "10px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
         >
           ورود
         </button>
@@ -101,7 +101,7 @@ export default function LoginPage() {
       )}
 
       <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#6b7280" }}>
-        حساب کاربری ندارید؟ <a href="/auth/register" style={{ color: "#4f46e5", fontWeight: 500 }}>ثبت‌نام کنید</a>
+        حساب کاربری ندارید؟ <a href="/auth/register" style={{ color: "#0086cd", fontWeight: 500 }}>ثبت‌نام کنید</a>
       </p>
     </div>
   );

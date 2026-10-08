@@ -76,7 +76,7 @@ export default function ProfilePage() {
       <div style={{ background: "var(--surface-raised)", borderRadius: 16, border: "1px solid var(--border)", padding: 28, marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* Avatar */}
-          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 700, flexShrink: 0, overflow: "hidden" }}>
+          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 700, flexShrink: 0, overflow: "hidden" }}>
             {profile.avatar_url
               ? <img src={profile.avatar_url} alt={profile.username} style={{ width: 72, height: 72, borderRadius: "50%", objectFit: "cover", display: "block" }} onError={(e) => { e.currentTarget.style.display = "none"; }} />
               : profile.username.slice(0, 2).toUpperCase()
@@ -93,7 +93,7 @@ export default function ProfilePage() {
           {/* Follow / Edit button */}
           {!isOwnProfile && auth && (
             <button onClick={handleFollow} disabled={followLoading}
-              style={{ background: isFollowing ? "#f3f4f6" : "#4f46e5", color: isFollowing ? "#374151" : "white", border: isFollowing ? "1px solid #d1d5db" : "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+              style={{ background: isFollowing ? "#f3f4f6" : "#0086cd", color: isFollowing ? "#374151" : "white", border: isFollowing ? "1px solid #d1d5db" : "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
               {followLoading ? "..." : isFollowing ? "لغو دنبال‌کردن" : "دنبال‌کردن"}
             </button>
           )}
@@ -122,7 +122,7 @@ export default function ProfilePage() {
       <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
         {(["questions", "comments"] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
-            style={{ padding: "8px 20px", borderRadius: 8, border: "none", fontSize: 14, fontWeight: 600, cursor: "pointer", background: tab === t ? "#4f46e5" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
+            style={{ padding: "8px 20px", borderRadius: 8, border: "none", fontSize: 14, fontWeight: 600, cursor: "pointer", background: tab === t ? "#0086cd" : "#f3f4f6", color: tab === t ? "white" : "#6b7280" }}>
             {{ questions: "پرسش‌ها", comments: "دیدگاه‌ها" }[t]}
           </button>
         ))}
@@ -158,7 +158,7 @@ export default function ProfilePage() {
           {(comments as Array<{ id: string; body: string; question_slug: string; question_title: string; created_at: string }>).map((c) => (
             <Link key={c.id} href={`/questions/${c.question_slug}`} style={{ textDecoration: "none" }}>
               <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
-                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 6px" }}>در <strong style={{ color: "#4f46e5" }}>{c.question_title}</strong></p>
+                <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 6px" }}>در <strong style={{ color: "#0086cd" }}>{c.question_title}</strong></p>
                 <p style={{ fontSize: 14, color: "#374151", margin: "0 0 6px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{c.body}</p>
                 <span style={{ fontSize: 12, color: "#9ca3af" }}>{timeAgo(c.created_at)}</span>
               </div>

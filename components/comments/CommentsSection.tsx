@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Comment } from "@/lib/api/comments";
 import { toast } from "@/components/ui/Toast";
 import { CommentNode } from "./CommentNode";
@@ -55,20 +55,30 @@ export default function CommentsSection({
   const [posting, setPosting] = useState(false);
   const [postError, setPostError] = useState("");
 
-  const loadComments = useCallback(() => {
-    setLoading(true);
-    setError("");
+  useEffect(() => {
+    let active = true;
     apiFetch(`/questions/${slug}/comments?sort=oldest&size=100`)
       .then((res) => {
+        if (!active) return;
         // API returns a plain array (already nested), not {items:[]}
         const items: Comment[] = Array.isArray(res) ? res : (res?.items ?? []);
         setTree(items);
+        setError("");
       })
-      .catch((err) => setError(err?.message ?? "Failed to load comments"))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (active) setError(err?.message ?? "Failed to load comments");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => { active = false; };
   }, [slug]);
 
-  useEffect(() => { loadComments(); }, [loadComments]);
+  useEffect(() => {
+    if (loading || !window.location.hash.startsWith("#comment-")) return;
+    const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    target?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [loading, tree]);
 
   function handleReplyAdded(reply: Comment, parentId: string) {
     // Add reply into the correct parent node in the tree
@@ -167,7 +177,7 @@ export default function CommentsSection({
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <span style={{ fontSize: 12, color: "#9ca3af" }}>{newComment.length}/5000</span>
             <button type="submit" disabled={posting}
-              style={{ background: posting ? "#a5b4fc" : "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: posting ? "not-allowed" : "pointer" }}>
+              style={{ background: posting ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: posting ? "not-allowed" : "pointer" }}>
               {posting ? "Posting..." : "Post Comment"}
             </button>
           </div>
@@ -177,13 +187,13 @@ export default function CommentsSection({
 
       {!questionClosed && isAuthenticated && !isVerified && (
         <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: "10px 14px", fontSize: 14, color: "#92400e", marginBottom: 20 }}>
-          Please <a href="/auth/verify-email" style={{ color: "#4f46e5" }}>verify your email</a> to post comments.
+          Please <a href="/auth/verify-email" style={{ color: "#0086cd" }}>verify your email</a> to post comments.
         </div>
       )}
 
       {!questionClosed && !isAuthenticated && (
         <div style={{ background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 8, padding: "12px 16px", fontSize: 14, color: "#6b7280", marginBottom: 20, textAlign: "center" }}>
-          <a href="/auth/login" style={{ color: "#4f46e5", fontWeight: 600 }}>Sign in</a> to join the discussion.
+          <a href="/auth/login" style={{ color: "#0086cd", fontWeight: 600 }}>Sign in</a> to join the discussion.
         </div>
       )}
 

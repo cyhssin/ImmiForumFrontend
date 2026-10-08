@@ -120,7 +120,7 @@ export default function SettingsPage() {
           {profileMsg && <p style={{ fontSize: 14, color: "#16a34a", margin: 0 }}>✓ {profileMsg}</p>}
           {profileError && <p style={{ fontSize: 14, color: "#dc2626", margin: 0 }}>{profileError}</p>}
           <button type="submit" disabled={saving}
-            style={{ background: saving ? "#a5b4fc" : "#4f46e5", color: "white", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: saving ? "not-allowed" : "pointer", alignSelf: "flex-start" }}>
+            style={{ background: saving ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: saving ? "not-allowed" : "pointer", alignSelf: "flex-start" }}>
             {saving ? "Saving..." : "Save Profile"}
           </button>
         </form>

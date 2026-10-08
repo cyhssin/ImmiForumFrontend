@@ -49,7 +49,7 @@ export default function FeedPage() {
           <div style={{ fontSize: 48, marginBottom: 12 }}>🌱</div>
           <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>Your feed is empty</h3>
           <p style={{ fontSize: 14, margin: "0 0 20px" }}>Follow people to see their activity here.</p>
-          <Link href="/questions" style={{ background: "#4f46e5", color: "white", borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+          <Link href="/questions" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
             Browse Questions
           </Link>
         </div>
@@ -60,7 +60,7 @@ export default function FeedPage() {
           {items.map((item, i) => (
             <div key={i} style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#4f46e5", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#0086cd", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700 }}>
                   {item.user.username.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
