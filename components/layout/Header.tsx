@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import Button from "@/components/ui/Button";
 import { notificationsApi } from "@/lib/api/notifications";
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   const { user, isAuthenticated, logout } = useAuthStore();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
 
@@ -16,7 +18,7 @@ export default function Header() {
     let active = true;
     const refreshCount = () => {
       notificationsApi.unreadCount()
-        .then((result) => { if (active) setNotificationCount(result.total_count); })
+        .then((result) => { if (active) setNotificationCount(result.unread_count); })
         .catch(() => {});
     };
     refreshCount();
@@ -52,9 +54,11 @@ export default function Header() {
         <div className="flex items-center gap-2">
           {isAuthenticated && user ? (
             <>
-              <Link href="/questions/ask">
-                <Button size="sm">بپرسید</Button>
-              </Link>
+              {pathname !== "/questions" && (
+                <Link href="/questions/ask">
+                  <Button size="sm">بپرسید</Button>
+                </Link>
+              )}
               <Link
                 href="/notifications"
                 aria-label={`اعلان‌ها، ${notificationCount} اعلان`}

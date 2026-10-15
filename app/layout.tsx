@@ -1,11 +1,18 @@
 "use client";
 
 import "./globals.css";
+import { Vazirmatn } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import Header from "@/components/layout/Header";
 import { ToastContainer } from "@/components/ui/Toast";
+
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic", "latin"],
+  variable: "--font-vazirmatn",
+  display: "swap",
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -15,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
+    <html lang="fa" dir="rtl" className={vazirmatn.variable} suppressHydrationWarning>
       <body className="min-h-screen">
         <QueryClientProvider client={queryClient}>
           <Header />

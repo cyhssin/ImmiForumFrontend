@@ -146,7 +146,7 @@ export default function EditQuestionPage() {
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
       <Link href={`/questions/${slug}`}
         style={{ color: "#6b7280", fontSize: 14, textDecoration: "none", display: "inline-block", marginBottom: 20 }}>
-        ← Back to question
+        ← برگشت
       </Link>
 
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 32 }}>

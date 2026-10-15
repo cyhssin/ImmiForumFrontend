@@ -159,7 +159,7 @@ export default function QuestionDetailPage() {
         {error ?? "Question not found"}
       </div>
       <Link href="/questions" style={{ display: "inline-block", marginTop: 16, color: "#0086cd", fontSize: 14 }}>
-        ← Back to questions
+        ← برگشت
       </Link>
     </div>
   );
@@ -167,7 +167,7 @@ export default function QuestionDetailPage() {
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
       <Link href="/questions" style={{ color: "#6b7280", fontSize: 14, textDecoration: "none", display: "inline-block", marginBottom: 20 }}>
-        ← Back to questions
+        ← برگشت
       </Link>
 
       {/* Question card */}

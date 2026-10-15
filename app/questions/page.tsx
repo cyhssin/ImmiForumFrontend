@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import { QuestionCardSkeleton } from "@/components/ui/Skeleton";
 import { questionsApi, Question, QuestionListResponse } from "@/lib/api/questions";
+import { reactionsApi } from "@/lib/api/reactions";
+import { toast } from "@/components/ui/Toast";
 
 function timeAgo(dateStr: string): string {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -34,6 +36,9 @@ function QuestionsContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+  const [likedQuestionIds, setLikedQuestionIds] = useState<Set<string>>(new Set());
+  const [bookmarkedQuestionIds, setBookmarkedQuestionIds] = useState<Set<string>>(new Set());
+  const [reactingQuestionIds, setReactingQuestionIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setLoading(true);
@@ -43,6 +48,61 @@ function QuestionsContent() {
       .catch((err) => setError(err?.message ?? "Failed to load questions"))
       .finally(() => setLoading(false));
   }, [page, search, tag]);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    Promise.all([
+      reactionsApi.likedQuestionIds(),
+      reactionsApi.bookmarkedQuestionIds(),
+    ]).then(([likes, bookmarks]) => {
+      setLikedQuestionIds(new Set(likes.question_ids));
+      setBookmarkedQuestionIds(new Set(bookmarks.question_ids));
+    }).catch(() => {});
+  }, [isAuthenticated]);
+
+  async function toggleReaction(question: Question, kind: "like" | "bookmark") {
+    if (!isAuthenticated || reactingQuestionIds.has(question.id)) return;
+    setReactingQuestionIds((current) => new Set(current).add(question.id));
+    try {
+      if (kind === "like") {
+        const result = await reactionsApi.toggleLike(question.id);
+        setLikedQuestionIds((current) => {
+          const updated = new Set(current);
+          if (result.liked) updated.add(question.id);
+          else updated.delete(question.id);
+          return updated;
+        });
+        setData((current) => current && ({
+          ...current,
+          items: current.items.map((item) => item.id === question.id
+            ? { ...item, likes_count: result.likes_count }
+            : item),
+        }));
+      } else {
+        const result = await reactionsApi.toggleBookmark(question.id);
+        setBookmarkedQuestionIds((current) => {
+          const updated = new Set(current);
+          if (result.bookmarked) updated.add(question.id);
+          else updated.delete(question.id);
+          return updated;
+        });
+        setData((current) => current && ({
+          ...current,
+          items: current.items.map((item) => item.id === question.id
+            ? { ...item, bookmarks_count: result.bookmarks_count }
+            : item),
+        }));
+      }
+    } catch (err: unknown) {
+      toast(err instanceof Error ? err.message : "واکنش ثبت نشد", "error");
+    } finally {
+      setReactingQuestionIds((current) => {
+        const updated = new Set(current);
+        updated.delete(question.id);
+        return updated;
+      });
+    }
+  }
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -76,16 +136,16 @@ function QuestionsContent() {
           key={search}
           name="search"
           defaultValue={search}
-          placeholder="جست و جو در پرسش‌ها"
+          placeholder="جستجو در ایمی ..."
           style={{ flex: 1, border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, outline: "none" }}
         />
         <button type="submit" style={{ background: "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-          جست و جو
+          جستجو
         </button>
         {search && (
           <button type="button" onClick={() => { setPage(1); router.push(tag ? `/questions?tag=${encodeURIComponent(tag)}` : "/questions"); }}
             style={{ background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db", borderRadius: 8, padding: "8px 12px", fontSize: 14, cursor: "pointer" }}>
-            پاک کردن جست و جو
+            پاک کردن جستجو
           </button>
         )}
       </form>
@@ -140,7 +200,16 @@ function QuestionsContent() {
       {!loading && !error && data && data.items.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {data.items.map((q: Question) => (
-            <QuestionCard key={q.id} question={q} onTagClick={() => setPage(1)} />
+            <QuestionCard
+              key={q.id}
+              question={q}
+              onTagClick={() => setPage(1)}
+              isAuthenticated={isAuthenticated}
+              liked={likedQuestionIds.has(q.id)}
+              bookmarked={bookmarkedQuestionIds.has(q.id)}
+              reacting={reactingQuestionIds.has(q.id)}
+              onToggleReaction={toggleReaction}
+            />
           ))}
         </div>
       )}
@@ -171,7 +240,23 @@ function QuestionsContent() {
   );
 }
 
-function QuestionCard({ question: q, onTagClick }: { question: Question; onTagClick: () => void }) {
+function QuestionCard({
+  question: q,
+  onTagClick,
+  isAuthenticated,
+  liked,
+  bookmarked,
+  reacting,
+  onToggleReaction,
+}: {
+  question: Question;
+  onTagClick: () => void;
+  isAuthenticated: boolean;
+  liked: boolean;
+  bookmarked: boolean;
+  reacting: boolean;
+  onToggleReaction: (question: Question, kind: "like" | "bookmark") => void;
+}) {
   return (
       <div style={{ background: "white", borderRadius: 12, border: "1px solid #e5e7eb", padding: 20, transition: "box-shadow 0.15s" }}
         onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)")}
@@ -211,12 +296,42 @@ function QuestionCard({ question: q, onTagClick }: { question: Question; onTagCl
         )}
 
         {/* Meta row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 13, color: "#9ca3af" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap", fontSize: 13, color: "#9ca3af" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <span>by <strong style={{ color: "#374151" }}>{q.author.username}</strong></span>
           <span>{timeAgo(q.created_at)}</span>
           <span>💬 {q.comments_count}</span>
-          <span>♥ {q.likes_count}</span>
-          <span>🔖 {q.bookmarks_count}</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              type="button"
+              aria-label={liked ? "Unlike question" : "Like question"}
+              aria-pressed={liked}
+              title={isAuthenticated ? (liked ? "برداشتن پسند" : "پسندیدن پرسش") : "برای پسندیدن وارد شوید"}
+              disabled={!isAuthenticated || reacting}
+              onClick={() => onToggleReaction(q, "like")}
+              style={{ minHeight: 34, display: "inline-flex", alignItems: "center", gap: 5, padding: "5px 8px", border: `1px solid ${liked ? "#0086cd" : "#d1d5db"}`, borderRadius: 7, color: liked ? "#0086cd" : "#4b5563", background: liked ? "#dff2ff" : "white", cursor: !isAuthenticated || reacting ? "not-allowed" : "pointer", opacity: !isAuthenticated || reacting ? 0.6 : 1 }}
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill={liked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+              </svg>
+              <span>{q.likes_count}</span>
+            </button>
+            <button
+              type="button"
+              aria-label={bookmarked ? "Remove bookmark" : "Bookmark question"}
+              aria-pressed={bookmarked}
+              title={isAuthenticated ? (bookmarked ? "حذف نشانک" : "ذخیره پرسش") : "برای ذخیره وارد شوید"}
+              disabled={!isAuthenticated || reacting}
+              onClick={() => onToggleReaction(q, "bookmark")}
+              style={{ minHeight: 34, display: "inline-flex", alignItems: "center", gap: 5, padding: "5px 8px", border: `1px solid ${bookmarked ? "#0086cd" : "#d1d5db"}`, borderRadius: 7, color: bookmarked ? "#0086cd" : "#4b5563", background: bookmarked ? "#dff2ff" : "white", cursor: !isAuthenticated || reacting ? "not-allowed" : "pointer", opacity: !isAuthenticated || reacting ? 0.6 : 1 }}
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill={bookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z" />
+              </svg>
+              <span>{q.bookmarks_count}</span>
+            </button>
+          </div>
         </div>
       </div>
   );

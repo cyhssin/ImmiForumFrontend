@@ -29,7 +29,7 @@ export default function HomePage() {
           <span className="text-indigo-600">Immigrants Team</span>
         </h1>
         <p className="text-gray-500 text-lg">
-          اینجا مهاجران کنار هم جمع می‌شوند تا سؤال‌هایشان را مطرح کنند، تجربه‌هایشان را به اشتراک بگذارند و در مسیر مهاجرت و زندگی در خارج از کشور، به یکدیگر کمک کنند.
+          تجربه‌های واقعی، پاسخ‌های مفید، همراهی در مسیر مهاجرت
         </p>
         <div className="mt-6 flex gap-3 justify-center">
           <Link
@@ -58,14 +58,14 @@ export default function HomePage() {
           type="text"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search questions..."
+          placeholder="جستجو در ایمی ..."
           className="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <button
           type="submit"
           className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-3 text-sm font-semibold transition-colors cursor-pointer"
         >
-          Search
+          جستجو
         </button>
       </form>
 

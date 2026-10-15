@@ -79,7 +79,7 @@ export default function AskPage() {
   return (
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
       <Link href="/questions" style={{ color: "#6b7280", fontSize: 14, textDecoration: "none", display: "inline-block", marginBottom: 20 }}>
-        ← Back to questions
+        ← بازگشت
       </Link>
 
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 32 }}>
@@ -172,7 +172,7 @@ export default function AskPage() {
             disabled={loading}
             style={{ background: loading ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 15, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}
           >
-            {loading ? "Posting..." : "Post Question"}
+            {loading ? "Posting..." : "ثبت"}
           </button>
         </form>
       </div>

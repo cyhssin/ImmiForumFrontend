@@ -36,9 +36,9 @@ export default function FeedPage() {
 
   return (
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: "0 0 24px" }}>Your Feed</h1>
+      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111827", margin: "0 0 24px" }}>دوستان</h1>
 
-      {loading && <div style={{ textAlign: "center", padding: "60px 0", color: "#9ca3af" }}>Loading feed...</div>}
+      {loading && <div style={{ textAlign: "center", padding: "60px 0", color: "#9ca3af" }}>در حال بارگذاری مطالب دوستان ...</div>}
 
       {error && (
         <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8, padding: 16, color: "#dc2626" }}>{error}</div>
@@ -47,10 +47,10 @@ export default function FeedPage() {
       {!loading && !error && items.length === 0 && (
         <div style={{ textAlign: "center", padding: "80px 0", color: "#9ca3af" }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🌱</div>
-          <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>Your feed is empty</h3>
-          <p style={{ fontSize: 14, margin: "0 0 20px" }}>Follow people to see their activity here.</p>
+          <h3 style={{ fontSize: 18, fontWeight: 600, color: "#374151", margin: "0 0 8px" }}>هنوز خبری از دوستان شما نیست!</h3>
+          <p style={{ fontSize: 14, margin: "0 0 20px" }}>دوستان جدید رو دنبال کن تا فعالیت‌هاشون رو اینجا ببینی.</p>
           <Link href="/questions" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-            Browse Questions
+              مشاهده سؤال‌ها
           </Link>
         </div>
       )}

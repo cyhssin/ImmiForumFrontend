@@ -154,7 +154,7 @@ export default function CommentsSection({
   return (
     <div style={{ background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 24, marginTop: 24 }}>
       <h2 style={{ fontSize: 17, fontWeight: 700, color: "#111827", margin: "0 0 20px" }}>
-        Comments ({totalComments})
+        نظرات ({totalComments})
       </h2>
 
       {questionClosed && (
@@ -168,7 +168,7 @@ export default function CommentsSection({
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment..."
+            placeholder=""
             rows={4}
             maxLength={5000}
             required
@@ -178,7 +178,7 @@ export default function CommentsSection({
             <span style={{ fontSize: 12, color: "#9ca3af" }}>{newComment.length}/5000</span>
             <button type="submit" disabled={posting}
               style={{ background: posting ? "#a5b4fc" : "#0086cd", color: "white", border: "none", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, cursor: posting ? "not-allowed" : "pointer" }}>
-              {posting ? "Posting..." : "Post Comment"}
+              {posting ? "Posting..." : "ثبت"}
             </button>
           </div>
           {postError && <p style={{ fontSize: 13, color: "#dc2626", margin: 0 }}>{postError}</p>}
@@ -208,7 +208,7 @@ export default function CommentsSection({
       {!loading && !error && tree.length === 0 && (
         <div style={{ textAlign: "center", padding: "32px 0", color: "#9ca3af" }}>
           <div style={{ fontSize: 36, marginBottom: 8 }}>💬</div>
-          <p style={{ fontSize: 14, margin: 0 }}>No comments yet. Be the first!</p>
+          <p style={{ fontSize: 14, margin: 0 }}>هنوز نظری ثبت نشده است. اولین نفر باشید</p>
         </div>
       )}
 
