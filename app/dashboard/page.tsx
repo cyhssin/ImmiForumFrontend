@@ -95,7 +95,9 @@ export default function DashboardPage() {
       {!loading && items.length === 0 && (
         <div style={{ textAlign: "center", padding: "48px 0", color: "#9ca3af" }}>
           <div style={{ fontSize: 40, marginBottom: 8 }}>📭</div>
-          <p style={{ fontSize: 14 }}>هنوز چیزی اینجا نیست.</p>
+          <p style={{ fontSize: 14 }}>
+            {tab === "bookmarks" ? "هنوز پرسشی را نشانک نکرده‌اید." : tab === "liked" ? "هنوز پرسشی را نپسندیده‌اید." : "هنوز چیزی اینجا نیست."}
+          </p>
           {tab === "questions" && (
             <Link href="/questions/ask" style={{ background: "#0086cd", color: "white", borderRadius: 8, padding: "8px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block", marginTop: 12 }}>
               پرسشتان را مطرح کنید
@@ -135,10 +137,20 @@ export default function DashboardPage() {
       )}
 
       {!loading && items.length > 0 && (tab === "bookmarks" || tab === "liked") && (
-        <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
-          <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>
-            {items.length} شناسه پرسش در بخش «{tab === "bookmarks" ? "نشانک‌ها" : "پسندیده‌ها"}». برای مشاهده آن‌ها به بخش <Link href="/questions" style={{ color: "#0086cd" }}>پرسش‌ها</Link> بروید.
-          </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {(items as Array<{ slug: string; title: string; body: string; status: string; likes_count: number; comments_count: number }>).map((q) => (
+            <Link key={q.slug} href={`/questions/${q.slug}`} style={{ textDecoration: "none" }}>
+              <div style={{ background: "var(--surface-raised)", borderRadius: 12, border: "1px solid var(--border)", padding: 16 }}>
+                <p style={{ fontSize: 15, fontWeight: 600, color: "#111827", margin: "0 0 6px" }}>{q.title}</p>
+                <p style={{ fontSize: 14, color: "#6b7280", margin: "0 0 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{q.body}</p>
+                <div style={{ fontSize: 12, color: "#9ca3af", display: "flex", gap: 12 }}>
+                  <span style={{ background: q.status === "open" ? "#dcfce7" : "#fee2e2", color: q.status === "open" ? "#166534" : "#991b1b", padding: "1px 8px", borderRadius: 99, fontWeight: 600 }}>{q.status === "open" ? "باز" : "بسته"}</span>
+                  <span>♥ {q.likes_count}</span>
+                  <span>💬 {q.comments_count}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       )}
     </div>
