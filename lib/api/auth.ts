@@ -69,5 +69,11 @@ export const authApi = {
   resendVerification: (email: string) =>
     api.post<{ message: string }>("/auth/resend-verification", { email }),
 
+  requestPasswordReset: (email: string) =>
+    api.post<{ message: string }>("/auth/forgot-password", { email }),
+
+  resetPassword: (token: string, new_password: string) =>
+    api.post<{ message: string }>("/auth/reset-password", { token, new_password }),
+
   me: () => api.get<MeResponse>("/users/me"),
 };

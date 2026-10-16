@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim() || "/api/v1";
@@ -94,6 +95,12 @@ export default function LoginPage() {
         </button>
       </form>
 
+      <p style={{ marginTop: 12, textAlign: "center", fontSize: 13, color: "#6b7280" }}>
+        <Link href="/auth/forgot-password" style={{ color: "#0086cd", fontWeight: 600, textDecoration: "none" }}>
+          گذرواژه را فراموش کرده‌اید؟
+        </Link>
+      </p>
+
       {status && (
         <div style={{ marginTop: 16, padding: 12, background: "#f3f4f6", borderRadius: 8, fontSize: 13, wordBreak: "break-all" }}>
           {status}
@@ -102,6 +109,12 @@ export default function LoginPage() {
 
       <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#6b7280" }}>
         حساب کاربری ندارید؟ <a href="/auth/register" style={{ color: "#0086cd", fontWeight: 500 }}>ثبت‌نام کنید</a>
+      </p>
+      <p style={{ marginTop: 8, textAlign: "center", fontSize: 13, color: "#6b7280" }}>
+        ایمیل تأیید را دریافت نکرده‌اید؟{" "}
+        <Link href="/auth/verify-email" style={{ color: "#0086cd", fontWeight: 600, textDecoration: "none" }}>
+          ارسال دوباره
+        </Link>
       </p>
     </div>
   );
