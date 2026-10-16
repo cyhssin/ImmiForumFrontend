@@ -90,6 +90,11 @@ export default function Header() {
                     <Link href={`/u/${user.username}`} className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>پروفایل</Link>
                     <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>داشبورد</Link>
                     <Link href="/settings" className="block px-4 py-2 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>تنظیمات</Link>
+                    {!user.is_verified && (
+                      <Link href={`/auth/verify-email?email=${encodeURIComponent(user.email)}`} className="block px-4 py-2 hover:bg-gray-50 text-amber-700" onClick={() => setMenuOpen(false)}>
+                        فعال‌سازی حساب
+                      </Link>
+                    )}
                     {(user.role === "admin" || user.role === "moderator") && (
                       <Link href="/admin" className="block px-4 py-2 hover:bg-gray-50 text-indigo-600" onClick={() => setMenuOpen(false)}>ادمین پنل</Link>
                     )}
